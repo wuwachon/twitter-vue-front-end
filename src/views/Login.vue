@@ -1,5 +1,14 @@
 <template>
-  <h1>
-    This is Login Page
-  </h1>
+  <LoginForm/>  
 </template>
+
+<script>
+import LoginForm from "./../components/LoginForm";
+
+export default {
+  name: "Login",
+  components: {
+    LoginForm,
+  },
+}
+</script>
