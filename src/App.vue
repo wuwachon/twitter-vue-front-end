@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap-grid.min.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-
+import "bootstrap/dist/css/bootstrap-grid.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 export default {
-  name: 'App'
-}
+  name: "App",
+};
 </script>
-
-<style>
-@import './assets/css/reset.css';
-@import './assets/css/typography.css';
-</style>
