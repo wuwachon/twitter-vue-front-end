@@ -1,12 +1,10 @@
 <template>
   <div id="login" class="d-flex flex-column mx-auto">
     <div class="logo mx-auto mb-4">
-      <img 
-        :src="require('./../assets/pictures/logo.png')" width="50px" />
+      <img :src="require('./../assets/pictures/logo.png')" width="50px" />
     </div>
     <p class="menu-text mx-auto mb-4">登入 Alphitter</p>
-    <form class="mx-auto w-100" action=""
-    @submit.prevent.stop="handleSubmit">
+    <form class="mx-auto w-100" action="" @submit.prevent.stop="handleSubmit">
       <div class="form-input d-flex flex-column">
         <label for="account" class="form-input-text">帳號</label>
         <input
@@ -28,13 +26,9 @@
           placeholder="請輸入密碼"
           required
         />
-        <div class="d-flex justify-content-between">
-        </div>
+        <div class="d-flex justify-content-between"></div>
       </div>
-      <button
-        type="submit"
-        class="btn btn-bg btn-356-50 w-100 mb-3"
-      >
+      <button type="submit" class="btn btn-bg btn-356-50 w-100 mb-3">
         登入
       </button>
 
@@ -43,10 +37,7 @@
           >註冊 Alphitter</router-link
         >
         <span class="space">．</span>
-        <a to="" class="mx-auto text-blue"
-          >後台登入
-          </a
-        >
+        <a to="" class="mx-auto text-blue">後台登入 </a>
       </div>
     </form>
   </div>
@@ -61,16 +52,16 @@ export default {
     };
   },
   methods: {
-    handleSubmit () {
+    handleSubmit() {
       const data = JSON.stringify({
         account: this.account,
-        password: this.password
-      })
+        password: this.password,
+      });
       // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log('data', data)
-    }
-  }
-}
+      console.log("data", data);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -84,7 +75,7 @@ export default {
 .space {
   font-size: 16px;
   font-weight: 400;
-  color: #0062FF;
+  color: #0062ff;
 }
 .btn {
   margin-top: 40px;
