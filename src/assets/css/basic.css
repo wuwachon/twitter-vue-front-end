@@ -59,9 +59,17 @@
   background-color: var(--main-color);
   color: #FFFFFF;
 }
+
 .btn-border {
   border: 1px solid var(--main-color);
 }
+
+/* 背景白色、邊框&文字其他顏色的按鈕 */
+.btn-clip {
+  background-color: #FFFFFF;
+  color: var(--main-color);
+}
+
 .btn-normal {
   width: 52px;
   height: 24px;
@@ -219,4 +227,48 @@
   line-height: 28px;
   letter-spacing: 0px;
   text-align: left;
+}
+
+/* sidebar general setting */
+.nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-title {
+  color: var(--dark-90);
+  font-weight: 700;
+}
+
+.nav-link {
+  display: flex;
+}
+
+.nav-item {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding: calc((2.5rem - var(--bs-nav-link-padding-y))/2) 0;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  background-position: center;
+  margin-right: 1.12rem;
+}
+
+/* 以 filter 改變 icon 顏色 */
+.nav-link:hover,
+.nav-link.active {
+  filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%) hue-rotate(2deg) brightness(107%) contrast(105%);
+  color: var(--main-color);
 }

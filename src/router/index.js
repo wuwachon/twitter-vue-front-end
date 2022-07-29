@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import Main from '../views/Main.vue'
 import NotFound from '../views/NotFound.vue'
 
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: Main
   },
   {
     path: '*',

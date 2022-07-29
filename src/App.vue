@@ -13,8 +13,3 @@ export default {
   name: 'App'
 }
 </script>
-
-<style>
-@import './assets/css/reset.css';
-@import './assets/css/typography.css';
-</style>
