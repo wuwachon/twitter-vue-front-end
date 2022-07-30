@@ -67,5 +67,6 @@ export default {
 .btn {
   margin-top: 40px;
   margin-bottom: 22px;
+  background-color: var(--main-color);
 }
 </style>

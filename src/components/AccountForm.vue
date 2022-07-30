@@ -6,44 +6,48 @@
     <p class="title mx-auto mb-4">建立你的帳號</p>
     <form class="mx-auto w-100" action="">
       <div class="form-input d-flex flex-column">
-        <label for="account" class="form-input-text">帳號</label>
+        <label for="account" class="form-input-title">帳號</label>
         <input
           type="text"
           name="account"
           id="account"
+          class="form-input-text"
           v-model="user.account"
           placeholder="請輸入帳號"
           required
         />
       </div>
       <div class="form-input d-flex flex-column">
-        <label for="name" class="form-input-text">名稱</label>
+        <label for="name" class="form-input-title">名稱</label>
         <input
           type="text"
           name="name"
           id="name"
+          class="form-input-text"
           v-model="user.name"
           placeholder="請輸入使用者名稱"
           required
         />
       </div>
       <div class="form-input d-flex flex-column">
-        <label for="email" class="form-input-text">Email</label>
+        <label for="email" class="form-input-title">Email</label>
         <input
           type="text"
           name="email"
           id="email"
+          class="form-input-text"
           v-model="user.email"
           placeholder="請輸入帳號"
           required
         />
       </div>
       <div class="form-input d-flex flex-column">
-        <label for="password" class="form-input-text">密碼</label>
+        <label for="password" class="form-input-title">密碼</label>
         <input
           type="password"
           name="password"
           id="password"
+          class="form-input-text"
           v-model="user.password"
           placeholder="請設定密碼"
           required
@@ -51,11 +55,12 @@
         <div class="d-flex justify-content-between"></div>
       </div>
       <div class="form-input d-flex flex-column">
-        <label for="passwordCheck" class="form-input-text">密碼確認</label>
+        <label for="passwordCheck" class="form-input-title">密碼確認</label>
         <input
           type="passwordCheck"
           name="passwordCheck"
           id="passwordCheck"
+          class="form-input-text"
           v-model="user.passwordCheck"
           placeholder="請再次輸入密碼"
           required
@@ -70,7 +75,11 @@
         註冊
       </button>
       <div class="text-center mb-5">
-        <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
+        <router-link
+          to="/login"
+          class="mx-auto text-blue"
+          >取消
+        </router-link>
       </div>
     </form>
   </div>
@@ -121,5 +130,6 @@ export default {
 .btn {
   margin-top: 40px;
   margin-bottom: 22px;
+  background-color: var(--main-color);
 }
 </style>

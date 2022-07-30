@@ -55,7 +55,7 @@
 }
 
 /* button basic*/
-.btn-bg, .btn-bg:hover {
+.btn-bg {
   background-color: var(--main-color);
   color: #FFFFFF;
 }
@@ -70,55 +70,11 @@
   color: var(--main-color);
 }
 
-.btn-normal {
-  width: 52px;
-  height: 24px;
-}
-/* button size */
-.btn-68 {
-  height: 32px;
-  width: 68px;
-  left: 488px;
-  top: 188px;
+/* radius 50 */
+.btn-50 {
   border-radius: 50px;
-  padding: 4px, 8px, 4px, 8px;
 }
-.btn-84 {
-  width: 84px;
-  height: 40px;
-  border-radius: 4px;
-  padding: 8px, 16px, 8px, 16px;
-}
-.btn-112 {
-  width: 112px;
-  height: 46px;
-  border-radius: 4px;
-  padding: 8px, 24px, 8px, 24px;
-}
-.btn-84-50 {
-  width: 84px;
-  height: 40px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-}
-.btn-112-50 {
-  width: 112px;
-  height: 46px;
-  border-radius: 50px;
-  padding: 8px, 24px, 8px, 24px;
-}
-.btn-320-50 {
-  width: 320px;
-  height: 46px;
-  border-radius: 50px;
-  padding: 8px, 24px, 8px, 24px;
-}
-.btn-356-50 {
-  height: 46px;
-  width: 356px;
-  border-radius: 50px;
-  padding: 8px, 24px, 8px, 24px;
-}
+
 
 /* form */
 .form-input {
@@ -149,13 +105,14 @@
   outline: none;
   border-bottom: 2px solid var(--danger-color);
 }
-
-.form-input-text {
+.form-input-title {
   margin-top: 5px;
   margin-left: 10px;
+  color: var(--dark-80);
+}
+.form-input-text {
   color: var(--dark-60);
 }
-
 /* toast setting */
 .toast {
   width: 394px;
@@ -264,4 +221,20 @@
 .nav-link.active {
   filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%) hue-rotate(2deg) brightness(107%) contrast(105%);
   color: var(--main-color);
+}
+
+/* 添加 col setting */
+.col {
+  margin-left: calc(1.5rem - (var(--bs-gutter-x) * .5));
+  margin-right: calc(1.5rem - (var(--bs-gutter-x) * .5));
+}
+
+.col,
+.col-6 {
+  height: 100vh;
+}
+
+.col-6 {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
