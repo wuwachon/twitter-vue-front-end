@@ -11,7 +11,7 @@
           type="text"
           name="account"
           id="account"
-          v-model="account"
+          v-model="user.account"
           placeholder="請輸入帳號"
           required
         />
@@ -22,7 +22,7 @@
           type="text"
           name="name"
           id="name"
-          v-model="name"
+          v-model="user.name"
           placeholder="請輸入使用者名稱"
           required
         />
@@ -33,7 +33,7 @@
           type="text"
           name="email"
           id="email"
-          v-model="email"
+          v-model="user.email"
           placeholder="請輸入帳號"
           required
         />
@@ -44,7 +44,7 @@
           type="password"
           name="password"
           id="password"
-          v-model="password"
+          v-model="user.password"
           placeholder="請設定密碼"
           required
         />
@@ -56,7 +56,7 @@
           type="passwordCheck"
           name="passwordCheck"
           id="passwordCheck"
-          v-model="passwordCheck"
+          v-model="user.passwordCheck"
           placeholder="請再次輸入密碼"
           required
         />
@@ -70,12 +70,7 @@
         註冊
       </button>
       <div class="text-center mb-5">
-        <a
-          to="/login"
-          class="mx-auto text-blue"
-          @click.stop.prevent="handleCancel"
-          >取消重填
-        </a>
+        <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
       </div>
     </form>
   </div>
@@ -85,21 +80,16 @@
 export default {
   data() {
     return {
-      account: "",
-      name: "",
-      email: "",
-      password: "",
-      passwordCheck: "",
+      user: {
+        account: "",
+        name: "",
+        email: "",
+        password: "",
+        passwordCheck: "",
+      },
     };
   },
   methods: {
-    handleCancel() {
-      this.account = "";
-      this.name = "";
-      this.email = "";
-      this.password = "";
-      this.passwordCheck = "";
-    },
     handleSubmit() {
       // todo: 串接後端，將註冊的資料送到後端
       // todo: 若有未正確填寫的，要跳出提示框
