@@ -12,7 +12,7 @@
           name="account"
           id="account"
           class="form-input-text"
-          v-model="account"
+          v-model="user.account"
           placeholder="請輸入帳號"
           required
         />
@@ -24,7 +24,7 @@
           name="name"
           id="name"
           class="form-input-text"
-          v-model="name"
+          v-model="user.name"
           placeholder="請輸入使用者名稱"
           required
         />
@@ -36,7 +36,7 @@
           name="email"
           id="email"
           class="form-input-text"
-          v-model="email"
+          v-model="user.email"
           placeholder="請輸入帳號"
           required
         />
@@ -48,7 +48,7 @@
           name="password"
           id="password"
           class="form-input-text"
-          v-model="password"
+          v-model="user.password"
           placeholder="請設定密碼"
           required
         />
@@ -61,7 +61,7 @@
           name="passwordCheck"
           id="passwordCheck"
           class="form-input-text"
-          v-model="passwordCheck"
+          v-model="user.passwordCheck"
           placeholder="請再次輸入密碼"
           required
         />
@@ -89,11 +89,13 @@
 export default {
   data() {
     return {
-      account: "",
-      name: "",
-      email: "",
-      password: "",
-      passwordCheck: "",
+      user: {
+        account: "",
+        name: "",
+        email: "",
+        password: "",
+        passwordCheck: "",
+      },
     };
   },
   methods: {
