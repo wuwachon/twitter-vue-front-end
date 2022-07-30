@@ -29,9 +29,9 @@ const routes = [
     component: Main
   },
   {
-    path: '/setting',
-    name: 'AccountSetting',
-    component: () => import('../views/AccountSetting.vue')
+    path: '/admin',
+    name: 'account-login',
+    component: () => import('../views/AdminLogin.vue')
   },
   {
     path: '*',

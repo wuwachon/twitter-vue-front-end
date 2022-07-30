@@ -10,7 +10,7 @@
         >註冊 Alphitter</router-link
       >
       <span class="space">．</span>
-      <router-link to="/setting" class="mx-auto text-blue"
+      <router-link to="/admin" class="mx-auto text-blue"
         >後台登入
       </router-link>
     </div>

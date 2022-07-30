@@ -17,7 +17,7 @@
 import LoginForm from "./../components/LoginForm";
 
 export default {
-  name: "AccountSetting",
+  name: "AdminLogin",
   components: {
     LoginForm,
   }
