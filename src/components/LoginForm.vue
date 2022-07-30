@@ -6,22 +6,24 @@
     <p class="menu-text mx-auto mb-4">登入 Alphitter</p>
     <form class="mx-auto w-100" action="" @submit.prevent.stop="handleSubmit">
       <div class="form-input d-flex flex-column">
-        <label for="account" class="form-input-text">帳號</label>
+        <label for="account" class="form-input-title">帳號</label>
         <input
           type="text"
           name="account"
           id="account"
+          class="form-input-text"
           v-model="account"
           placeholder="請輸入帳號"
           required
         />
       </div>
       <div class="form-input d-flex flex-column">
-        <label for="password" class="form-input-text">密碼</label>
+        <label for="password" class="form-input-title">密碼</label>
         <input
           type="password"
           name="password"
           id="password"
+          class="form-input-text"
           v-model="password"
           placeholder="請輸入密碼"
           required
@@ -37,7 +39,7 @@
           >註冊 Alphitter</router-link
         >
         <span class="space">．</span>
-        <a to="" class="mx-auto text-blue">後台登入 </a>
+        <router-link to="/admin" class="mx-auto text-blue">後台登入 </router-link>
       </div>
     </form>
   </div>
@@ -80,5 +82,6 @@ export default {
 .btn {
   margin-top: 40px;
   margin-bottom: 22px;
+  background-color: var(--main-color);
 }
 </style>
