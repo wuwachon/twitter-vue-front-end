@@ -3,7 +3,7 @@
     <h4 class="card-title">推薦跟隨</h4>
     <div class="card-container">
       <div class="card-info">
-        <div class="user-image"></div>
+        <div class="user-image-sm"></div>
         <div class="user-naming">
           <p class="user-name">Pizza Hut</p>
           <p class="user-handle">@pizzahut</p>
@@ -11,7 +11,7 @@
         <button class="btn-border btn-clip btn-84-50 user-follow">跟隨</button>
       </div>
       <div class="card-info">
-        <div class="user-image"></div>
+        <div class="user-image-sm"></div>
         <div class="user-naming">
           <p class="user-name">Bank of Alphacamp</p>
           <p class="user-handle">@BankOfAlphacamp</p>
@@ -21,7 +21,7 @@
         </button>
       </div>
       <div class="card-info">
-        <div class="user-image"></div>
+        <div class="user-image-sm"></div>
         <div class="user-naming">
           <p class="user-name">MasterCard</p>
           <p class="user-handle">@MasterCard</p>
@@ -45,7 +45,7 @@
   width: 100%;
   height: 100%;
   padding: 0.5rem 1.5rem;
-  border-top: 1px solid #e6ecf0;
+  border-top: 1px solid var(--page-divider);
 }
 
 .card-title {
@@ -61,7 +61,7 @@
   padding: 0.5rem 0;
 }
 
-.user-image {
+.user-image-sm {
   width: 50px;
   height: 50px;
   background-image: url("./../assets/pictures/dummyUser.png");
