@@ -25,7 +25,7 @@
     </div>
     <button
       type="submit"
-      class="btn btn-bg btn-356-50 w-100 mb-3"
+      class="btn-bg btn-border w-100"
       :disabled="isProcessing"
     >
       登入
@@ -64,9 +64,11 @@ export default {
   font-weight: 400;
   color: #0062ff;
 }
-.btn {
+button {
+  border-radius: 50px;
   margin-top: 40px;
   margin-bottom: 22px;
   background-color: var(--main-color);
+  padding: 8px 158px 8px 158px;
 }
 </style>

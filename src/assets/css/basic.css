@@ -216,7 +216,7 @@
   margin-right: 1.12rem;
 }
 
-/* 以 filter 改變 icon 顏色 */
+/* 以 filter 改變 nav icon 顏色 */
 .nav-link:hover,
 .nav-link.active {
   filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%) hue-rotate(2deg) brightness(107%) contrast(105%);
@@ -243,4 +243,15 @@
 .user-image-sm {
   width: 50px;
   height: 50px;
-}  
+}
+
+/* twitter user handle setting */
+.user-handle {
+  color: var(--dark-70);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.user-name {
+  font-weight: 700;
+}
