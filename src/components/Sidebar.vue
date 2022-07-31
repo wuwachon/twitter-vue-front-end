@@ -23,7 +23,7 @@
         </li>
       </ul>
       <button
-        class="btn-bg btn-border btn-112-50 w-100"
+        class="add-tweet-btn btn-bg btn-border btn-50 w-100"
         @click.stop.prevent="showModal(true)"
       >
         推文
@@ -99,6 +99,11 @@ export default {
 
 .nav-bottom .nav-item {
   margin-bottom: 0;
+}
+
+.add-tweet-btn {
+  height: 2.875rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .quit-icon {

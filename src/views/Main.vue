@@ -39,20 +39,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.col {
-  margin-left: calc(1.5rem - (var(--bs-gutter-x) * 0.5));
-  margin-right: calc(1.5rem - (var(--bs-gutter-x) * 0.5));
-}
-
-.col,
-.col-6 {
-  height: 100vh;
-}
-
-.col-6 {
-  border-left: 1px solid var(--page-divider);
-  border-right: 1px solid var(--page-divider);
-}
-</style>

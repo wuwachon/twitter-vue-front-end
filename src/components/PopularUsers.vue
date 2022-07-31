@@ -8,7 +8,7 @@
           <p class="user-name">Pizza Hut</p>
           <p class="user-handle">@pizzahut</p>
         </div>
-        <button class="btn-border btn-clip btn-84-50 user-follow">跟隨</button>
+        <button class="btn-border btn-clip btn-50 user-follow-btn">跟隨</button>
       </div>
       <div class="card-info">
         <div class="user-image-sm"></div>
@@ -16,7 +16,7 @@
           <p class="user-name">Bank of Alphacamp</p>
           <p class="user-handle">@BankOfAlphacamp</p>
         </div>
-        <button class="btn-border btn-clip btn-84-50 user-follow">
+        <button class="btn-border btn-clip btn-50 user-follow-btn">
           跟隨
         </button>
       </div>
@@ -26,7 +26,7 @@
           <p class="user-name">MasterCard</p>
           <p class="user-handle">@MasterCard</p>
         </div>
-        <button class="btn-border btn-bg btn-84-50 user-follow">
+        <button class="btn-border btn-bg btn-50 user-follow-btn">
           正在跟隨
         </button>
       </div>
@@ -56,7 +56,7 @@
 .card-info {
   width: 100%;
   display: grid;
-  grid-template-columns: 50px 100px 1fr;
+  grid-template-columns: 50px 100px 100px;
   column-gap: 0.5rem;
   padding: 0.5rem 0;
 }
@@ -83,5 +83,11 @@
   color: var(--dark-70);
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+.user-follow-btn {
+  width: max-content;
+  padding: 0.5rem 1rem;
+  justify-self: end;
 }
 </style>
