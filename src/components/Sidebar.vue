@@ -22,7 +22,7 @@
           </a>
         </li>
       </ul>
-      <button class="btn-bg btn-border btn-112-50 w-100">推文</button>
+      <button class="add-tweet-btn btn-bg btn-border btn-50 w-100">推文</button>
     </div>
     <div class="nav-bottom">
       <ul class="nav-list">
@@ -82,6 +82,11 @@
 
 .nav-bottom .nav-item {
   margin-bottom: 0;
+}
+
+.add-tweet-btn {
+  height: 2.875rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .quit-icon {
