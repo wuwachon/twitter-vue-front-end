@@ -2,35 +2,48 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <SideBar />
+        <SideBar @show-modal="toggleModal(true)" />
       </div>
-      <div class="col-6">    
+      <div class="col-6">
         <h4>首頁</h4>
       </div>
       <div class="col">
         <PopularUsers />
       </div>
     </div>
+    <TweetModal :show="showModal" @close="toggleModal(false)" />
   </div>
 </template>
 
 <script>
-import SideBar from '../components/Sidebar'
-import PopularUsers from '../components/PopularUsers'
+import SideBar from "../components/Sidebar";
+import PopularUsers from "../components/PopularUsers";
+import TweetModal from "../components/TweetModal";
 
 export default {
-  name: 'Main',
+  name: "Main",
+  data() {
+    return {
+      showModal: false,
+    };
+  },
   components: {
     SideBar,
-    PopularUsers
-  }
-}
+    PopularUsers,
+    TweetModal,
+  },
+  methods: {
+    toggleModal(bool) {
+      this.showModal = bool;
+    },
+  },
+};
 </script>
 
 <style scoped>
 .col {
-  margin-left: calc(1.5rem - (var(--bs-gutter-x) * .5));
-  margin-right: calc(1.5rem - (var(--bs-gutter-x) * .5));
+  margin-left: calc(1.5rem - (var(--bs-gutter-x) * 0.5));
+  margin-right: calc(1.5rem - (var(--bs-gutter-x) * 0.5));
 }
 
 .col,
@@ -39,7 +52,7 @@ export default {
 }
 
 .col-6 {
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  border-left: 1px solid var(--page-divider);
+  border-right: 1px solid var(--page-divider);
 }
 </style>
