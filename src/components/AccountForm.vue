@@ -1,76 +1,68 @@
 <template>
-  <div id="register" class="d-flex flex-column mx-auto">
-    <div class="logo mx-auto mb-4">
-      <img :src="require('./../assets/pictures/logo.png')" width="50px" />
+  <form class="mx-auto w-100" action=""
+  @submit.prevent.stop="handleSubmit" >
+    <div class="form-input d-flex flex-column">
+      <label for="account" class="form-input-text">帳號</label>
+      <input
+        type="text"
+        name="account"
+        id="account"
+        v-model="user.account"
+        placeholder="請輸入帳號"
+        required
+      />
     </div>
-    <p class="title mx-auto mb-4">建立你的帳號</p>
-    <form class="mx-auto w-100" action="">
-      <div class="form-input d-flex flex-column">
-        <label for="account" class="form-input-title">帳號</label>
-        <input
-          type="text"
-          name="account"
-          id="account"
-          class="form-input-text"
-          v-model="user.account"
-          placeholder="請輸入帳號"
-          required
-        />
-      </div>
-      <div class="form-input d-flex flex-column">
-        <label for="name" class="form-input-title">名稱</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          class="form-input-text"
-          v-model="user.name"
-          placeholder="請輸入使用者名稱"
-          required
-        />
-      </div>
-      <div class="form-input d-flex flex-column">
-        <label for="email" class="form-input-title">Email</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          class="form-input-text"
-          v-model="user.email"
-          placeholder="請輸入帳號"
-          required
-        />
-      </div>
-      <div class="form-input d-flex flex-column">
-        <label for="password" class="form-input-title">密碼</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form-input-text"
-          v-model="user.password"
-          placeholder="請設定密碼"
-          required
-        />
-        <div class="d-flex justify-content-between"></div>
-      </div>
-      <div class="form-input d-flex flex-column">
-        <label for="passwordCheck" class="form-input-title">密碼確認</label>
-        <input
-          type="passwordCheck"
-          name="passwordCheck"
-          id="passwordCheck"
-          class="form-input-text"
-          v-model="user.passwordCheck"
-          placeholder="請再次輸入密碼"
-          required
-        />
-        <div class="d-flex justify-content-between"></div>
-      </div>
+    <div class="form-input d-flex flex-column">
+      <label for="name" class="form-input-text">名稱</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        v-model="user.name"
+        placeholder="請輸入使用者名稱"
+        required
+      />
+    </div>
+    <div class="form-input d-flex flex-column">
+      <label for="email" class="form-input-text">Email</label>
+      <input
+        type="text"
+        name="email"
+        id="email"
+        v-model="user.email"
+        placeholder="請輸入帳號"
+        required
+      />
+    </div>
+    <div class="form-input d-flex flex-column">
+      <label for="password" class="form-input-text">密碼</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        v-model="user.password"
+        placeholder="請設定密碼"
+        required
+      />
+      <div class="d-flex justify-content-between"></div>
+    </div>
+    <div class="form-input d-flex flex-column">
+      <label for="checkPassword" class="form-input-text">密碼確認</label>
+      <input
+        type="password"
+        name="checkPassword"
+        id="checkPassword"
+        v-model="user.checkPassword"
+        placeholder="請設定密碼"
+        required
+      />
+      <div class="d-flex justify-content-between"></div>
+    </div>
+    <div>
       <button
         type="submit"
-        @click.stop.prevent="handleSubmit"
-        class="btn btn-bg btn-356-50 w-100 mb-3"
+        class="btn-bg btn-border w-100"
+        :disabled="isProcessing"
       >
         註冊
       </button>
@@ -81,11 +73,14 @@
           >取消
         </router-link>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </template>
 
 <script>
+import { Toast } from "./../utils/helpers";
+import authorizationAPI from "./../apis/authorization";
+
 export default {
   data() {
     return {
@@ -94,42 +89,73 @@ export default {
         name: "",
         email: "",
         password: "",
-        passwordCheck: "",
+        checkPassword: "",
       },
+      isProcessing: false,
     };
   },
   methods: {
-    handleSubmit() {
-      // todo: 串接後端，將註冊的資料送到後端
-      // todo: 若有未正確填寫的，要跳出提示框
-      if (
-        !this.account ||
-        !this.name ||
-        !this.email ||
-        !this.password ||
-        !this.passwordCheck
-      ) {
-        console.log("請確實填寫每一個欄位");
-        return;
+    // todo: 未處理驗證部分
+    // todo: 註冊尚未成功
+    checkPassword () {
+      console.log('check password')
+      return this.user.password === this.user.passwordCheck
+    },
+    async handleSubmit() {
+      try {
+        if (
+          !this.user.account ||
+          !this.user.name ||
+          !this.user.email ||
+          !this.user.password ||
+          !this.user.checkPassword
+        ) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫所有欄位",
+          });
+          return;
+        }
+        this.isProcessing = true;
+
+        const response = await authorizationAPI.register({
+          
+          account: this.user.account,
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+          checkPassword: this.user.checkPassword,
+        });
+        const data = response.data.data;
+
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
       }
-      //註冊成功，跳回登入頁
-      this.$router.push("/login");
+          console.log("data", data);
+
+        //註冊成功，跳回登入頁
+        this.$router.push("/login");
+
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "註冊失敗，請稍候再試",
+        });
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-#register {
-  width: 540px;
-  padding-top: 60px;
-}
-.title {
-  font-size: 1.5rem;
-}
-.btn {
+button {
   margin-top: 40px;
   margin-bottom: 22px;
+  padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
+}
+.form-input:nth-child(5) {
+  margin-bottom: 0rem;
 }
 </style>
