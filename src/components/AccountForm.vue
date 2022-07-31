@@ -67,7 +67,11 @@
         註冊
       </button>
       <div class="text-center mb-5">
-        <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
+        <router-link
+          to="/login"
+          class="mx-auto text-blue"
+          >取消
+        </router-link>
       </div>
     </div>
   </form>
@@ -149,6 +153,7 @@ button {
   margin-top: 40px;
   margin-bottom: 22px;
   padding: 8px 158px 8px 158px;
+  background-color: var(--main-color);
 }
 .form-input:nth-child(5) {
   margin-bottom: 0rem;
