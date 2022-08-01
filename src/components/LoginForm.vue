@@ -68,15 +68,20 @@ export default {
         });
 
         // 取得 API 請求後的資料
-        const data = response.data.data;
+        const data = response.data;
 
         if (data.status !== "success") {
           throw new Error(data.message);
         }
 
-        localStorage.setItem("token", data.token);
+        // ⚠️ TODO：等後端更新路由後修改為 data.token
+        localStorage.setItem("token", data.data.token);
 
         // 成功登入後轉址
+        Toast.fire({
+          icon: "success",
+          title: "登入成功",
+        });
         this.$router.push("/main");
       } catch (error) {
         this.isProcessing = false;
@@ -98,13 +103,21 @@ export default {
   font-weight: 400;
   color: #0062ff;
 }
+
 button {
+  opacity: 1;
   border-radius: 50px;
   margin-top: 40px;
   margin-bottom: 22px;
   padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
+  cursor: pointer;
 }
+
+button[disabled] {
+  opacity: 0.5;
+}
+
 .form-input:nth-child(2) {
   margin-bottom: 0rem;
 }

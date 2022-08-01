@@ -3,12 +3,6 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue'
 import NotFound from '../views/NotFound.vue'
-import '@/assets/css/basic.css'
-import '@/assets/css/color.css'
-import '@/assets/css/reset.css'
-import '@/assets/css/typography.css'
-
-
 
 Vue.use(VueRouter)
 
