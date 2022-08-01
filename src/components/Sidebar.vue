@@ -23,7 +23,7 @@
         </li>
       </ul>
       <button
-        class="add-tweet-btn btn-bg btn-border btn-50 w-100"
+        class="add-tweet-btn btn-bg btn-border btn-50"
         @click.stop.prevent="showModal(true)"
       >
         推文
@@ -55,6 +55,11 @@ export default {
 </script>
 
 <style scoped>
+.nav {
+  display: fixed;
+  left: 0;
+  top: 0;
+}
 .nav-logo {
   margin: 0.8125rem 0 0 0.8125rem;
   width: 40px;
