@@ -1,6 +1,5 @@
 <template>
-  <form class="mx-auto w-100" action=""
-  @submit.prevent.stop="handleSubmit" >
+  <form class="mx-auto w-100" action="" @submit.prevent.stop="handleSubmit">
     <div class="form-input d-flex flex-column">
       <label for="account" class="form-input-text">帳號</label>
       <input
@@ -18,10 +17,15 @@
         type="text"
         name="name"
         id="name"
+        :class="{ error: isNameTooLong }"
+        @input="isNameTooLong = false"
         v-model="user.name"
         placeholder="請輸入使用者名稱"
         required
       />
+      <span v-if="isNameTooLong" class="error-message mx-3"
+        >名稱不可超過 50 字！</span
+      >
     </div>
     <div class="form-input d-flex flex-column">
       <label for="email" class="form-input-text">Email</label>
@@ -61,17 +65,13 @@
     <div>
       <button
         type="submit"
-        class="btn-bg btn-border w-100"
+        class="btn-bg btn-border btn-50 w-100"
         :disabled="isProcessing"
       >
         註冊
       </button>
       <div class="text-center mb-5">
-        <router-link
-          to="/login"
-          class="mx-auto text-blue"
-          >取消
-        </router-link>
+        <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
       </div>
     </div>
   </form>
@@ -91,71 +91,109 @@ export default {
         password: "",
         checkPassword: "",
       },
+      isNameTooLong: false,
       isProcessing: false,
     };
   },
   methods: {
-    // todo: 未處理驗證部分
-    // todo: 註冊尚未成功
-    checkPassword () {
-      console.log('check password')
-      return this.user.password === this.user.passwordCheck
+    checkNameLength() {
+      if (this.user.name.length > 50) {
+        this.isNameTooLong = true;
+      } else {
+        this.isNameTooLong = false;
+      }
     },
-    // async handleSubmit() {
-    //   try {
-    //     if (
-    //       !this.user.account ||
-    //       !this.user.name ||
-    //       !this.user.email ||
-    //       !this.user.password ||
-    //       !this.user.checkPassword
-    //     ) {
-    //       Toast.fire({
-    //         icon: "warning",
-    //         title: "請填寫所有欄位",
-    //       });
-    //       return;
-    //     }
-    //     this.isProcessing = true;
+    async handleSubmit() {
+      try {
+        // 若任一欄位沒填，防止請求送出
+        if (
+          !this.user.account ||
+          !this.user.name ||
+          !this.user.email ||
+          !this.user.password ||
+          !this.user.checkPassword
+        ) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫所有欄位",
+          });
+          return;
+        }
 
-    //     const response = await authorizationAPI.register({
-          
-    //       account: this.user.account,
-    //       name: this.user.name,
-    //       email: this.user.email,
-    //       password: this.user.password,
-    //       checkPassword: this.user.checkPassword,
-    //     });
-    //     const data = response.data.data;
+        // 若兩次密碼不同，清空密碼欄並防止請求送出
+        if (this.user.password !== this.user.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "兩次輸入密碼不同，請重新輸入",
+          });
+          this.user.password = "";
+          this.user.checkPassword = "";
+          return;
+        }
 
+        if (this.user.name.length > 50) {
+          this.isNameTooLong = true;
+          return;
+        }
 
-    //     if (data.status !== "success") {
-    //       throw new Error(data.message);
-    //   }
-    //       console.log("data", data);
+        // 暫時關閉按鈕
+        this.isProcessing = true;
 
-    //     //註冊成功，跳回登入頁
-    //     this.$router.push("/login");
+        const response = await authorizationAPI.register({
+          account: this.user.account,
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+          checkPassword: this.user.checkPassword,
+        });
+        const data = response.data;
 
-    //   } catch (error) {
-    //     Toast.fire({
-    //       icon: "warning",
-    //       title: "註冊失敗，請稍候再試",
-    //     });
-    //   }
-    // },
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        Toast.fire({
+          icon: "success",
+          title: "註冊成功！請登入帳戶",
+        });
+
+        //註冊成功，跳回登入頁
+        this.$router.push("/login");
+      } catch (error) {
+        console.error(error);
+        Toast.fire({
+          icon: "warning",
+          title: "註冊失敗，請稍候再試",
+        });
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
 button {
+  opacity: 1;
   margin-top: 40px;
   margin-bottom: 22px;
   padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
+  cursor: pointer;
 }
+
+button[disabled] {
+  opacity: 0.5;
+}
+
 .form-input:nth-child(5) {
   margin-bottom: 0rem;
+}
+
+.error-message {
+  color: var(--danger-color);
+}
+
+.error {
+  border-bottom: 2px solid var(--danger-color);
 }
 </style>

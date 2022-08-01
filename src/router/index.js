@@ -3,12 +3,6 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue'
 import NotFound from '../views/NotFound.vue'
-import '@/assets/css/basic.css'
-import '@/assets/css/color.css'
-import '@/assets/css/reset.css'
-import '@/assets/css/typography.css'
-
-
 
 Vue.use(VueRouter)
 
@@ -26,7 +20,7 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import( '../views/Register.vue')
+    component: () => import('../views/Register.vue')
   },
   {
     path: '/main',
@@ -49,9 +43,14 @@ const routes = [
     component: () => import('../views/AdminLogin.vue')
   },
   {
-    path: '/user',
+    path: '/user/:id',
     name: 'user',
     component: () => import('../views/User.vue')
+  },
+  {
+    path: '/setting',
+    name: 'account-setting',
+    component: () => import('../views/AccountSetting.vue')
   },
   {
     path: '*',
