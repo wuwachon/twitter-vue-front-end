@@ -104,6 +104,7 @@ button {
   margin-bottom: 22px;
   padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
+  padding: 8px 158px 8px 158px;
 }
 .form-input:nth-child(2) {
   margin-bottom: 0rem;
