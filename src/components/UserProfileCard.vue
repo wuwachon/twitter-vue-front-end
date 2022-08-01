@@ -1,18 +1,17 @@
 <template>
   <div class="card-group">
     <div class="card">
-      <div class="card-header mt-3" style="background-color: initial">
-        <div class="d-flex" style="align-items: center">
+      <div class="card-header mt-3">
+        <div class="d-flex align-items-center">
           <div class="me-2">
             <img
               :src="require('../assets/pictures/prev.png')"
-              class="card-img-top"
+              class="prev-icon"
               alt="..."
-              style="width: 17px"
             />
           </div>
           <div>
-            <h5 class="card-text m-0" style="font-weight: 700">
+            <h5 class="user-name m-0">
               {{ user.name }}
             </h5>
             <span class="card-text">{{ user.tweetCount }} 推文</span>
@@ -23,7 +22,7 @@
       <div class="profile-wrapper position-relative">
         <img
           class="banner-img w-100"
-          :src="user.banner | emptyImage"
+          :src="require('../assets/pictures/banner.png')"
           style="height: 200px"
           alt=""
         />
@@ -36,14 +35,17 @@
         </div>
         <!-- button -->
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-edit btn-border btn-50">
+          <button type="button" 
+          @click.stop.prevent="isEditing = true"
+          class="btn btn-edit btn-border btn-50">
             編輯個人資料
           </button>
+          <!-- todo: 這邊要插入 UserEditModel -->
         </div>
       </div>
 
       <div class="card-body text-start">
-        <h5 class="card-title">{{ user.name }}</h5>
+        <h5 class="user-name">{{ user.name }}</h5>
         <span class="card-text">@ {{ user.account }}</span>
         <p class="introduction">{{ user.introduction }}</p>
         <span class="card-text me-4">
@@ -127,13 +129,28 @@ export default {
 .card {
   border: initial;
 }
+.card-header {
+  background-color: initial;
+}
+.card-text {
+  color: var(--dark-100);
+}
+.prev-icon {
+  width: 17px;
+}
+.user-name {
+  font-weight: 700;
+  line-height: 26px;
+  color: var(--dark-100);
+}
 .introduction {
   font-size: 0.875rem;
   line-height: 1.375rem;
   text-align: left;
+  color: var(--dark-100);
 }
 /* text-setting */
-span {
+span.card-text {
   color: var(--secondary-color);
 }
 span.num {

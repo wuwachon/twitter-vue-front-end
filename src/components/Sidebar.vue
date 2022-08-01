@@ -22,7 +22,12 @@
           </a>
         </li>
       </ul>
-      <button class="btn-bg btn-border btn-112-50 w-100">推文</button>
+      <button
+        class="add-tweet-btn btn-bg btn-border btn-50 w-100"
+        @click.stop.prevent="showModal(true)"
+      >
+        推文
+      </button>
     </div>
     <div class="nav-bottom">
       <ul class="nav-list">
@@ -36,6 +41,18 @@
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  name: "Sidebar",
+  methods: {
+    showModal(bool) {
+      // 通知 Main.vue 要開啟 modal
+      this.$emit("show-modal", bool);
+    },
+  },
+};
+</script>
 
 <style scoped>
 .nav-logo {
@@ -82,6 +99,11 @@
 
 .nav-bottom .nav-item {
   margin-bottom: 0;
+}
+
+.add-tweet-btn {
+  height: 2.875rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .quit-icon {
