@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import { Toast } from "./../utils/helpers";
-import authorizationAPI from "./../apis/authorization";
+// import { Toast } from "./../utils/helpers";
+// import authorizationAPI from "./../apis/authorization";
 
 export default {
   data() {
@@ -101,49 +101,49 @@ export default {
       console.log('check password')
       return this.user.password === this.user.passwordCheck
     },
-    async handleSubmit() {
-      try {
-        if (
-          !this.user.account ||
-          !this.user.name ||
-          !this.user.email ||
-          !this.user.password ||
-          !this.user.checkPassword
-        ) {
-          Toast.fire({
-            icon: "warning",
-            title: "請填寫所有欄位",
-          });
-          return;
-        }
-        this.isProcessing = true;
+    // async handleSubmit() {
+    //   try {
+    //     if (
+    //       !this.user.account ||
+    //       !this.user.name ||
+    //       !this.user.email ||
+    //       !this.user.password ||
+    //       !this.user.checkPassword
+    //     ) {
+    //       Toast.fire({
+    //         icon: "warning",
+    //         title: "請填寫所有欄位",
+    //       });
+    //       return;
+    //     }
+    //     this.isProcessing = true;
 
-        const response = await authorizationAPI.register({
+    //     const response = await authorizationAPI.register({
           
-          account: this.user.account,
-          name: this.user.name,
-          email: this.user.email,
-          password: this.user.password,
-          checkPassword: this.user.checkPassword,
-        });
-        const data = response.data.data;
+    //       account: this.user.account,
+    //       name: this.user.name,
+    //       email: this.user.email,
+    //       password: this.user.password,
+    //       checkPassword: this.user.checkPassword,
+    //     });
+    //     const data = response.data.data;
 
 
-        if (data.status !== "success") {
-          throw new Error(data.message);
-      }
-          console.log("data", data);
+    //     if (data.status !== "success") {
+    //       throw new Error(data.message);
+    //   }
+    //       console.log("data", data);
 
-        //註冊成功，跳回登入頁
-        this.$router.push("/login");
+    //     //註冊成功，跳回登入頁
+    //     this.$router.push("/login");
 
-      } catch (error) {
-        Toast.fire({
-          icon: "warning",
-          title: "註冊失敗，請稍候再試",
-        });
-      }
-    },
+    //   } catch (error) {
+    //     Toast.fire({
+    //       icon: "warning",
+    //       title: "註冊失敗，請稍候再試",
+    //     });
+    //   }
+    // },
   },
 };
 </script>

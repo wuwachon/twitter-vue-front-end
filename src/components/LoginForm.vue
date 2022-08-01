@@ -35,8 +35,8 @@
 
 <script>
 // import { mapState } from 'vuex'
-import { Toast } from "./../utils/helpers";
-import authorizationAPI from "./../apis/authorization";
+// import { Toast } from "./../utils/helpers";
+// import authorizationAPI from "./../apis/authorization";
 
 export default {
   name: "LoginForm",
@@ -51,43 +51,43 @@ export default {
     };
   },
   methods: {
-    async handleSubmit() {
-      try {
-        if (!this.user.account || !this.user.password) {
-          Toast.fire({
-            icon: "warning",
-            title: "請填寫帳戶、密碼",
-          });
-          return;
-        }
-        this.isProcessing = true;
+    // async handleSubmit() {
+    //   try {
+    //     if (!this.user.account || !this.user.password) {
+    //       Toast.fire({
+    //         icon: "warning",
+    //         title: "請填寫帳戶、密碼",
+    //       });
+    //       return;
+    //     }
+    //     this.isProcessing = true;
 
-        const response = await authorizationAPI.loginIn({
-          account: this.user.account,
-          password: this.user.password,
-        });
+    //     const response = await authorizationAPI.loginIn({
+    //       account: this.user.account,
+    //       password: this.user.password,
+    //     });
 
-        // 取得 API 請求後的資料
-        const data = response.data.data;
+    //     // 取得 API 請求後的資料
+    //     const data = response.data.data;
 
-        if (data.status !== "success") {
-          throw new Error(data.message);
-        }
+    //     if (data.status !== "success") {
+    //       throw new Error(data.message);
+    //     }
 
-        localStorage.setItem("token", data.token);
+    //     localStorage.setItem("token", data.token);
 
-        // 成功登入後轉址
-        this.$router.push("/main");
-      } catch (error) {
-        this.isProcessing = false;
+    //     // 成功登入後轉址
+    //     this.$router.push("/main");
+    //   } catch (error) {
+    //     this.isProcessing = false;
 
-        Toast.fire({
-          icon: "warning",
-          title: "請確認您輸入的帳號、密碼是否正確",
-        });
-        this.user.password = "";
-      }
-    },
+    //     Toast.fire({
+    //       icon: "warning",
+    //       title: "請確認您輸入的帳號、密碼是否正確",
+    //     });
+    //     this.user.password = "";
+    //   }
+    // },
   },
 };
 </script>
