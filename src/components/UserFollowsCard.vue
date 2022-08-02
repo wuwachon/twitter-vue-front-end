@@ -1,24 +1,5 @@
 <template>
   <div class="card-group">
-    <div class="card">
-      <div class="card-header mt-3">
-        <div class="d-flex align-items-center">
-          <div class="me-2">
-            <img
-              :src="require('../assets/pictures/prev.png')"
-              class="prev-icon"
-              alt="..."
-            />
-          </div>
-          <div>
-            <h5 class="user-name m-0">
-              {{ user.name }}
-            </h5>
-            <span class="card-text">{{ user.tweetCount }} 推文</span>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Followers / Following tabs -->
     <ul class="tab">
       <li class="tab-item">
