@@ -2,6 +2,7 @@
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
       <div class="modal-container">
+        <!-- modal header: close button -->
         <div class="modal-header">
           <img
             src="./../assets/pictures/close.png"
@@ -10,6 +11,7 @@
             @click.stop.prevent="$emit('close')"
           />
         </div>
+        <!-- modal body: user icon and textarea -->
         <div class="modal-body">
           <img
             src="./../assets/pictures/dummyUser2.png"
@@ -24,6 +26,7 @@
             maxlength="140"
           ></textarea>
         </div>
+        <!-- modal footer: warning message, push tweet button -->
         <div class="modal-footer">
           <span class="tweet-warning mx-3">{{ this.errorMessage }}</span>
           <button
@@ -100,7 +103,7 @@ export default {
   background-color: var(--dark-10);
 }
 
-/* modal 上半部： 關閉按鈕 */
+/* modal header: close button */
 .modal-header {
   width: 100%;
   padding: 1.22rem;
@@ -113,7 +116,7 @@ export default {
   cursor: pointer;
 }
 
-/* modal 中間：使用者圖示、文字輸入區 */
+/* modal body: user icon and textarea */
 .modal-body {
   width: 100%;
   background-color: var(--dark-10);
@@ -121,14 +124,6 @@ export default {
   position: relative;
   display: flex;
   column-gap: 10px;
-}
-
-.tweet-placeholder {
-  position: absolute;
-  left: 80px;
-  top: 1.5rem;
-  font-size: 1.125rem;
-  color: #9197a3;
 }
 
 .tweet-textarea {
@@ -144,7 +139,7 @@ export default {
   outline: none;
 }
 
-/* modal 底部：警告訊息、發送推文按鈕 */
+/* modal footer: warning message, push tweet button */
 .modal-footer {
   width: 100%;
   padding: 1rem;

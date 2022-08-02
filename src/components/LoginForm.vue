@@ -93,7 +93,6 @@ export default {
         this.user.password = "";
       }
     },
-  },
 };
 </script>
 

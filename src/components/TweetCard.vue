@@ -8,7 +8,7 @@
           <div class="user-naming">
             <p class="user-name">Apple</p>
             <p class="user-handle">
-              @applepen<span>・</span><span class="created-at">3 小時</span>
+              @applepen<span>・</span><span class="time-stamp">3 小時</span>
             </p>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <div class="user-naming">
             <p class="user-name">Apple</p>
             <p class="user-handle">
-              @applepen<span>・</span><span class="created-at">3 小時</span>
+              @applepen<span>・</span><span class="time-stamp">3 小時</span>
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div class="user-naming">
             <p class="user-name">Apple</p>
             <p class="user-handle">
-              @applepen<span>・</span><span class="created-at">3 小時</span>
+              @applepen<span>・</span><span class="time-stamp">3 小時</span>
             </p>
           </div>
         </div>

@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import { Toast } from "./../utils/helpers";
-import authorizationAPI from "./../apis/authorization";
+// import { Toast } from "./../utils/helpers";
+// import authorizationAPI from "./../apis/authorization";
 
 export default {
   data() {

@@ -39,6 +39,7 @@
   height: max-content;
   background-color: var(--dark-20);
   border-radius: 1rem;
+  margin-top: 1rem;
 }
 
 .card-container {

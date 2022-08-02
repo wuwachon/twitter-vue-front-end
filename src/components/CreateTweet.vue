@@ -72,7 +72,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-/* modal 中間：使用者圖示、文字輸入區 */
+/* modal body: 使用者圖示、文字輸入區 */
 .modal-body {
   flex-grow: 1;
   width: 100%;
@@ -81,14 +81,6 @@ export default {
   position: relative;
   display: flex;
   column-gap: 10px;
-}
-
-.tweet-placeholder {
-  position: absolute;
-  left: 80px;
-  top: 1.5rem;
-  font-size: 1.125rem;
-  color: #9197a3;
 }
 
 .tweet-textarea {
@@ -105,7 +97,7 @@ export default {
   outline: none;
 }
 
-/* modal 底部：警告訊息、發送推文按鈕 */
+/* modal footer: warning message, push tweet button */
 .modal-footer {
   width: 100%;
   padding: 1rem;
