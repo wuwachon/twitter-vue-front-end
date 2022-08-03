@@ -18,22 +18,21 @@
       <span class="tweet-warning mx-3">{{ this.errorMessage }}</span>
       <button
         class="tweet-btn btn-bg btn-border"
-        :class="{ disabled: isProcessing }"
+        :disabled="isProcessing"
         @click.prevent.stop="handleTweetSubmit(tweetContent)"
       >
-        推文
+        {{ isProcessing ? "處理中..." : "推文" }}
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import tweetsAPI from "../apis/tweet";
+import { Toast } from "./../utils/helpers";
+
 export default {
-  name: "TweetModal",
-  props: {
-    // 從 Main.vue 傳來
-    show: Boolean,
-  },
+  name: "CreateTweet",
   data() {
     return {
       tweetContent: "",
@@ -42,17 +41,38 @@ export default {
     };
   },
   methods: {
-    handleTweetSubmit(content) {
-      if (!content || content.trim().length === 0) {
-        this.errorMessage = "內容不可空白";
-        return;
-      } else if (content.trim().length > 140) {
-        this.errorMessage = "字數不可超過 140 字";
-        return;
+    async handleTweetSubmit(content) {
+      try {
+        if (!content || content.trim().length === 0) {
+          this.errorMessage = "內容不可空白";
+          return;
+        } else if (content.trim().length > 140) {
+          this.errorMessage = "字數不可超過 140 字";
+          return;
+        }
+        // disable tweet button to prevent duplicate requests
+        this.isProcessing = true;
+
+        // POST api/tweets
+        const { data } = await tweetsAPI.postTweet(content);
+
+        if(data.status !== "success") {
+          throw new Error(data.message)
+        }
+
+        // emit to Main.vue
+        this.$emit("after-tweet-submit");
+        // re-enable tweet button
+        this.isProcessing = false;
+      } catch (error) {
+        console.error(error.response.data)
+        // re-enable tweet button
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "error",
+          title: error.message
+        })
       }
-      console.log(content);
-      // TODO：發送 POST api/tweets
-      // TODO：傳送過程 isProcessing = true 以暫時 disable 按鈕，防止重複發推文
     },
     clearErrorMessage() {
       this.errorMessage = "";
@@ -114,10 +134,6 @@ export default {
   width: 4rem;
   height: 2.5rem;
   border-radius: 50px;
-}
-
-.tweet-btn.disabled {
-  opacity: 0.5;
 }
 
 .tweet-btn:focus,

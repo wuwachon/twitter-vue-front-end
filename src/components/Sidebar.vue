@@ -4,27 +4,27 @@
       <div class="nav-logo"></div>
       <ul class="nav-list">
         <li class="nav-item">
-          <router-link to="/main" class="nav-link active">
+          <router-link to="/main" class="nav-link">
             <div class="nav-icon home-icon"></div>
             <span class="nav-title">首頁</span>
           </router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <router-link to="#" class="nav-link">
             <div class="nav-icon person-icon"></div>
             <span class="nav-title">個人資料</span>
-          </a>
+          </router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <router-link to="/setting" class="nav-link">
             <div class="nav-icon setting-icon"></div>
             <span class="nav-title">設定</span>
-          </a>
+          </router-link>
         </li>
       </ul>
       <button
         class="add-tweet-btn btn-bg btn-border btn-50"
-        @click.stop.prevent="showModal(true)"
+        @click.stop.prevent="showTweetModal(true)"
       >
         推文
       </button>
@@ -46,9 +46,9 @@
 export default {
   name: "Sidebar",
   methods: {
-    showModal(bool) {
-      // 通知 Main.vue 要開啟 modal
-      this.$emit("show-modal", bool);
+    showTweetModal(bool) {
+      // 通知 Main.vue or Reply.vue 要開啟 tweet modal
+      this.$emit("show-tweet-modal", bool);
     },
   },
 };
@@ -107,6 +107,7 @@ export default {
 }
 
 .add-tweet-btn {
+  max-width: 11.1rem;
   height: 2.875rem;
   padding: 0.5rem 1.5rem;
 }

@@ -31,7 +31,7 @@
   border-bottom: 1px solid var(--page-divider);
 }
 
-/* tweet header: user name & handle */
+/* tweet header: user name, handle and image */
 .tweet-header {
   display: flex;
   align-items: center;
@@ -96,6 +96,12 @@
   cursor: pointer;
 }
 
+/* disable filter setting from basic.css */
+.icon-section:hover {
+  filter: none;
+}
+
+/* add individual icon filter setting */
 .footer-icon:hover {
   filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%)
     hue-rotate(2deg) brightness(107%) contrast(105%);

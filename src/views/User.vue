@@ -4,7 +4,7 @@
       <div class="col">
           <SideBar />
       </div>
-      <div class="col-6">
+      <div class="col-7">
         <UserProfileCard />
       </div>
       <div class="col">

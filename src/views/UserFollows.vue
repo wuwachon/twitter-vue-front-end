@@ -4,7 +4,7 @@
       <div class="col">
         <SideBar />
       </div>
-      <div class="col-6 scrollable-part">
+      <div class="col-7 scrollable-part">
         <div class="main-title">
           <img
             :src="require('../assets/pictures/prev.png')"

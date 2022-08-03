@@ -28,7 +28,7 @@
       class="btn-bg btn-border w-100"
       :disabled="isProcessing"
     >
-      登入
+      {{ isProcessing ? "處理中..." : "登入" }}
     </button>
   </form>
 </template>
@@ -66,22 +66,21 @@ export default {
           account: this.user.account,
           password: this.user.password,
         });
-
+        
         // 取得 API 請求後的資料
         const data = response.data;
 
-        if (data.status !== "success") {
+        if (data.status === "error") {
           throw new Error(data.message);
         }
 
-        // ⚠️ TODO：等後端更新路由後修改為 data.token
-        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("token", data.token);
 
-        // 成功登入後轉址
         Toast.fire({
           icon: "success",
           title: "登入成功",
         });
+        // 成功登入後轉址
         this.$router.push("/main");
       } catch (error) {
         this.isProcessing = false;
@@ -93,7 +92,8 @@ export default {
         this.user.password = "";
       }
     },
-};
+  }
+}
 </script>
 
 <style scoped>
@@ -111,10 +111,6 @@ button {
   padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
   cursor: pointer;
-}
-
-button[disabled] {
-  opacity: 0.5;
 }
 
 .form-input:nth-child(2) {

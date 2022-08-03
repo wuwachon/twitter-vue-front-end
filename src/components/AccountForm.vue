@@ -6,10 +6,15 @@
         type="text"
         name="account"
         id="account"
+        :class="{ error: isAccountTooLong }"
+        @input="isAccountTooLong = false"
         v-model="user.account"
         placeholder="請輸入帳號"
         required
       />
+      <span v-if="isAccountTooLong" class="error-message mx-3"
+        >帳號不可超過 20 字！</span
+      >
     </div>
     <div class="form-input d-flex flex-column">
       <label for="name" class="form-input-text">名稱</label>
@@ -68,7 +73,7 @@
         class="btn-bg btn-border btn-50 w-100"
         :disabled="isProcessing"
       >
-        註冊
+        {{ isProcessing ? "處理中..." : "註冊" }}
       </button>
       <div class="text-center mb-5">
         <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
@@ -78,8 +83,8 @@
 </template>
 
 <script>
-// import { Toast } from "./../utils/helpers";
-// import authorizationAPI from "./../apis/authorization";
+import { Toast } from "./../utils/helpers";
+import authorizationAPI from "./../apis/authorization";
 
 export default {
   data() {
@@ -92,17 +97,11 @@ export default {
         checkPassword: "",
       },
       isNameTooLong: false,
+      isAccountTooLong: false,
       isProcessing: false,
     };
   },
   methods: {
-    checkNameLength() {
-      if (this.user.name.length > 50) {
-        this.isNameTooLong = true;
-      } else {
-        this.isNameTooLong = false;
-      }
-    },
     async handleSubmit() {
       try {
         // 若任一欄位沒填，防止請求送出
@@ -131,6 +130,13 @@ export default {
           return;
         }
 
+        // 帳號超過 20 字，防止請求送出
+        if(this.user.account.length > 20) {
+          this.isAccountTooLong = true;
+          return;
+        }
+
+        // 名稱超過 50 字，防止請求送出
         if (this.user.name.length > 50) {
           this.isNameTooLong = true;
           return;
@@ -146,10 +152,9 @@ export default {
           password: this.user.password,
           checkPassword: this.user.checkPassword,
         });
-        const data = response.data;
 
-        if (data.status !== "success") {
-          throw new Error(data.message);
+        if (response.data.status === "error") {
+          throw new Error(response.data.message);
         }
 
         Toast.fire({
@@ -157,10 +162,11 @@ export default {
           title: "註冊成功！請登入帳戶",
         });
 
-        //註冊成功，跳回登入頁
+        // 註冊成功，跳回登入頁
         this.$router.push("/login");
       } catch (error) {
-        console.error(error);
+        this.isProcessing = false;
+        console.error(error.response);
         Toast.fire({
           icon: "warning",
           title: "註冊失敗，請稍候再試",
@@ -179,10 +185,6 @@ button {
   padding: 8px 158px 8px 158px;
   background-color: var(--main-color);
   cursor: pointer;
-}
-
-button[disabled] {
-  opacity: 0.5;
 }
 
 .form-input:nth-child(5) {
