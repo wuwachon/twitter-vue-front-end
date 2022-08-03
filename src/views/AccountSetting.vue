@@ -4,7 +4,7 @@
       <div class="col-3">
         <Sidebar />
       </div>
-      <div class="col-6">
+      <div class="col-7">
         <h4>帳戶設定</h4>
         <hr />
         <form

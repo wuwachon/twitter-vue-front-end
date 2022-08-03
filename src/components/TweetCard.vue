@@ -1,93 +1,36 @@
 <template>
-  <!-- Tweet cards list -->
-  <div class="card-container">
-    <div class="card-tweet">
-      <div class="user-image-sm"></div>
-      <div class="card-info">
-        <div class="card-header">
-          <div class="user-naming">
-            <p class="user-name">Apple</p>
-            <p class="user-handle">
-              @applepen<span>・</span><span class="time-stamp">3 小時</span>
-            </p>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="tweet-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque interdum rutrum sodales. Nullam mattis fermentum
-            libero, non volutpat.
+  <div class="card-tweet">
+    <img
+      class="user-image-sm"
+      :src="tweet.User.avatar | emptyImage"
+      alt="user-image"
+    />
+    <div class="card-info">
+      <div class="card-header">
+        <div class="user-naming">
+          <p class="user-name">{{ tweet.User.name }}</p>
+          <p class="user-handle">
+            @{{ tweet.User.account }}<span>・</span
+            ><span class="time-stamp">{{ tweet.createdAt | fromNow }}</span>
           </p>
-        </div>
-        <div class="card-footer">
-          <div class="icon-section">
-            <div class="footer-icon reply-icon"></div>
-            <span class="counter reply-count">13</span>
-          </div>
-          <div class="icon-section">
-            <div class="footer-icon like-icon"></div>
-            <span class="counter like-count">76</span>
-          </div>
         </div>
       </div>
-    </div>
-    <div class="card-tweet">
-      <div class="user-image-sm"></div>
-      <div class="card-info">
-        <div class="card-header">
-          <div class="user-naming">
-            <p class="user-name">Apple</p>
-            <p class="user-handle">
-              @applepen<span>・</span><span class="time-stamp">3 小時</span>
-            </p>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="tweet-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque interdum rutrum sodales. Nullam mattis fermentum
-            libero, non volutpat.
-          </p>
-        </div>
-        <div class="card-footer">
-          <div class="icon-section">
-            <div class="footer-icon reply-icon"></div>
-            <span class="counter reply-count">13</span>
-          </div>
-          <div class="icon-section">
-            <div class="footer-icon like-icon"></div>
-            <span class="counter like-count">76</span>
-          </div>
-        </div>
+      <div class="card-body">
+        <p class="tweet-content">
+          {{ tweet.description }}
+        </p>
       </div>
-    </div>
-    <div class="card-tweet">
-      <div class="user-image-sm"></div>
-      <div class="card-info">
-        <div class="card-header">
-          <div class="user-naming">
-            <p class="user-name">Apple</p>
-            <p class="user-handle">
-              @applepen<span>・</span><span class="time-stamp">3 小時</span>
-            </p>
-          </div>
+      <div class="card-footer">
+        <div class="icon-section">
+          <div
+          class="footer-icon reply-icon"
+          @click.stop.prevent="showReplyModal(true)"
+          ></div>
+          <span class="counter reply-count">{{ tweet.repliesCounts }}</span>
         </div>
-        <div class="card-body">
-          <p class="tweet-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque interdum rutrum sodales. Nullam mattis fermentum
-            libero, non volutpat.
-          </p>
-        </div>
-        <div class="card-footer">
-          <div class="icon-section">
-            <div class="footer-icon reply-icon"></div>
-            <span class="counter reply-count">13</span>
-          </div>
-          <div class="icon-section">
-            <div class="footer-icon like-icon"></div>
-            <span class="counter like-count">76</span>
-          </div>
+        <div class="icon-section">
+          <div class="footer-icon like-icon"></div>
+          <span class="counter like-count">{{ tweet.likesCounts }}</span>
         </div>
       </div>
     </div>
@@ -95,57 +38,27 @@
 </template>
 
 <script>
-const dummyData = {
-  data: {
-    user: {
-      id: 270,
-      name: "user3",
-      introduction: "hello,Nice to meet you",
-      avatar: null,
-      banner: null,
-    },
-    currentUser: {
-      id: 272,
-      account: "user5",
-      name: "user5",
-      email: "user5@example.com",
-      avatar: null,
-      introduction: null,
-      banner: null,
-      role: "user",
-      createdAt: "2022-07-27T05:06:05.000Z",
-      updatedAt: "2022-07-28T15:18:16.000Z",
-      Followers: [],
-      Followings: [],
+import { emptyImageFilter } from "../utils/mixins";
+import { fromNowFilter } from "../utils/mixins"
+
+export default {
+  name: "TweetCard",
+  mixins: [emptyImageFilter, fromNowFilter],
+  props: {
+    initialTweet: {
+      type: Object,
+      required: true,
     },
   },
-};
-export default {
   data() {
     return {
-      currentUser: {},
-      user: {
-        id: 0,
-        account: "",
-        name: "",
-        introduction: "",
-        avatar: "",
-        banner: "",
-        tweetCount: 0,
-        followingCount: 0,
-        followerCount: 0,
-        likeCount: 0,
-        isFollowed: false,
-      },
+      tweet: this.initialTweet,
     };
   },
-  created() {
-    this.fetchUser();
-  },
   methods: {
-    fetchUser() {
-      this.currentUser = dummyData.data.currentUser;
-      this.user = dummyData.data.user;
+    showReplyModal(bool) {
+      // 通知 Main.vue or Reply.vue 要開啟 reply modal
+      this.$emit("show-reply-modal", bool);
     },
   },
 };
@@ -160,11 +73,7 @@ export default {
 }
 
 .user-image-sm {
-  padding: 1rem;
   margin-right: 0.5rem;
-  background-image: url("./../assets/pictures/dummyUser.png");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .card-info {
@@ -193,16 +102,5 @@ export default {
 
 .like-icon {
   background-image: url("./../assets/pictures/like.png");
-}
-
-.icon-section:hover {
-  filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%)
-    hue-rotate(2deg) brightness(107%) contrast(105%);
-}
-
-.counter {
-  color: var(--secondary-color);
-  font-size: 0.875rem;
-  font-weight: 600;
 }
 </style>

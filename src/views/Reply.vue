@@ -2,15 +2,17 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <SideBar @show-modal="toggleTweetModal(true)" />
+        <SideBar @show-tweet-modal="toggleTweetModal(true)" />
       </div>
-      <div class="col-6 scrollable-part">
+      <div class="col-7 scrollable-part">
         <div class="main-title">
+          <router-link to="/main">
           <img
             :src="require('../assets/pictures/prev.png')"
             class="prev-icon"
             alt="..."
           />
+          </router-link>
           <h4>推文</h4>
         </div>
         <TweetDetail />

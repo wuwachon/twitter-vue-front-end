@@ -75,6 +75,10 @@
   border-radius: 50px;
 }
 
+/* when button is disabled */
+button[disabled] {
+  opacity: 0.5;
+}
 
 /* form */
 .form-input {
@@ -231,11 +235,11 @@
 }
 
 .col,
-.col-6 {
+.col-7 {
   height: 100vh;
 }
 
-.col-6 {
+.col-7 {
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }

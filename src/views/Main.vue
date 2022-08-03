@@ -2,13 +2,22 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <SideBar @show-modal="toggleTweetModal(true)" />
+        <SideBar @show-tweet-modal="toggleTweetModal(true)" />
       </div>
-      <div class="col-6 scrollable-part">
+      <div class="col-7 scrollable-part">
         <h4 class="main-title">首頁</h4>
-        <CreateTweet />
+        <CreateTweet
+        @after-tweet-submit="afterTweetSubmit"
+        />
         <div class="divider"></div>
-        <TweetCard />
+        <div class="card-container">
+          <TweetCard
+            v-for="tweet in allTweets"
+            :key="tweet.id"
+            :initial-tweet="tweet"
+            @show-reply-modal="toggleReplyModal(true)"
+          />
+        </div>
       </div>
       <div class="col">
         <PopularUsers />
@@ -25,14 +34,17 @@ import PopularUsers from "../components/PopularUsers";
 import TweetModal from "../components/TweetModal";
 import CreateTweet from "../components/CreateTweet";
 import TweetCard from "../components/TweetCard";
-import ReplyModal from "../components/ReplyModal"
+import ReplyModal from "../components/ReplyModal";
+import tweetsAPI from "../apis/tweet";
+import { Toast } from "./../utils/helpers";
 
 export default {
   name: "Main",
   data() {
     return {
       showTweetModal: false,
-      showReplyModal: false
+      showReplyModal: false,
+      allTweets: [],
     };
   },
   components: {
@@ -41,7 +53,10 @@ export default {
     TweetModal,
     CreateTweet,
     TweetCard,
-    ReplyModal
+    ReplyModal,
+  },
+  created() {
+    this.fetchTweets();
   },
   methods: {
     toggleTweetModal(bool) {
@@ -49,6 +64,26 @@ export default {
     },
     toggleReplyModal(bool) {
       this.showReplyModal = bool;
+    },
+    async fetchTweets() {
+      try {
+        const response = await tweetsAPI.getTweets();
+
+        this.allTweets = response.data;
+
+        if (response.data.status === "error") {
+          throw new Error(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得所有推文，請稍後再試",
+        });
+      }
+    },
+    afterTweetSubmit() {
+      this.fetchTweets();
     }
   },
 };
@@ -82,12 +117,12 @@ export default {
 }
 
 .scrollable-part::-webkit-scrollbar {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   width: 15px;
 }
 
 .scrollable-part::-webkit-scrollbar-thumb {
-  background-color: #C1C1C1;
+  background-color: #c1c1c1;
   border-radius: 4px;
 }
 </style>

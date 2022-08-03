@@ -4,7 +4,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 import axios from 'axios'
 
-const baseURL = 'https://simpletwitter-2206.herokuapp.com/api'
+// 🚨 heroku 尚未建置完成，先以 localhost 替代
+const baseURL = 'http://localhost:3000/api'
 
 export const apiHelper = axios.create({
   baseURL
