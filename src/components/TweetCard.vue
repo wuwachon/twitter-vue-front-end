@@ -186,27 +186,7 @@ export default {
   column-gap: 0.5rem;
 }
 
-/* card footer: reply & like icons and counter */
-.card-footer {
-  margin-top: 9px;
-  display: flex;
-  column-gap: 2.58rem;
-}
-
-.icon-section {
-  display: flex;
-  column-gap: 9px;
-}
-
-.footer-icon {
-  width: 1rem;
-  height: 1rem;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-}
-
+/* card footer: reply & like icons  */
 .reply-icon {
   background-image: url("./../assets/pictures/reply.png");
 }
