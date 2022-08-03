@@ -73,13 +73,17 @@ export default {
         if (data.status === "error") {
           throw new Error(data.message);
         }
-
+        // token 存取至 localStorage 內
         localStorage.setItem("token", data.token);
 
         Toast.fire({
           icon: "success",
           title: "登入成功",
         });
+
+        // 以 setCurrentUser 將使用者資料存入 Vuex state
+        // 取得 token
+        // 以 token 呼叫 get current user
         // 成功登入後轉址
         this.$router.push("/main");
       } catch (error) {

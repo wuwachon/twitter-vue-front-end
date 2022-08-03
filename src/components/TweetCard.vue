@@ -2,15 +2,15 @@
   <div class="card-tweet">
     <img
       class="user-image-sm"
-      :src="tweet.User.avatar | emptyImage"
+      :src="tweet.user.avatar | emptyImage"
       alt="user-image"
     />
     <div class="card-info">
       <div class="card-header">
         <div class="user-naming">
-          <p class="user-name">{{ tweet.User.name }}</p>
+          <p class="user-name">{{ tweet.user.name }}</p>
           <p class="user-handle">
-            @{{ tweet.User.account }}<span>・</span
+            @{{ tweet.user.account }}<span>・</span
             ><span class="time-stamp">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
@@ -26,11 +26,11 @@
           class="footer-icon reply-icon"
           @click.stop.prevent="showReplyModal(true)"
           ></div>
-          <span class="counter reply-count">{{ tweet.repliesCounts }}</span>
+          <span class="counter reply-count">{{ tweet.replyCounts }}</span>
         </div>
         <div class="icon-section">
           <div class="footer-icon like-icon"></div>
-          <span class="counter like-count">{{ tweet.likesCounts }}</span>
+          <span class="counter like-count">{{ tweet.likeCounts }}</span>
         </div>
       </div>
     </div>

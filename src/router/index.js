@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue'
 import NotFound from '../views/NotFound.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,12 @@ const routes = [
 const router = new VueRouter({
   linkExactActiveClass: 'active',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  // dispatch 呼叫 vuex action，每次路由變化，向 API 發請求，取得當前使用者
+  store.dispatch('fetchCurrentUser')
+  next()
 })
 
 export default router
