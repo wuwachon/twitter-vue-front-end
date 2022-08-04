@@ -10,8 +10,7 @@
             <p class="user-handle">
               @applepen<span>・</span
               >
-              <!-- todo: 尚未轉換成 mixins -->
-              <span class="time-stamp">{{ tweet.createdAt }}</span>
+              <span class="time-stamp">{{ tweet.createdAt| fromNow }}</span>
             </p>
           </div>
         </div>
@@ -76,9 +75,11 @@ const dummyData = {
     },
   ],
 };
+import { fromNowFilter } from "./../utils/mixins";
 
 export default {
   name: "UserTweets",
+  mixins: [fromNowFilter],
   props: {
     userId:{
       type: Number,
@@ -107,12 +108,6 @@ export default {
 </script>
 
 <style scoped>
-/* todo: 一樣的加入共用 */
-.user-tweets {
-  display: flex;
-  border-bottom: 1px solid var(--page-divider);
-  padding: 1rem;
-}
 .user-image-sm {
   padding: 1rem;
   margin-right: 0.5rem;
@@ -120,47 +115,13 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.card-info {
-  display: flex;
-  flex-direction: column;
-}
 
-.card-footer {
-  margin-top: 9px;
-  display: flex;
-  column-gap: 2.58rem;
-}
-
-.icon-section {
-  display: flex;
-  column-gap: 9px;
-}
-
-.footer-icon {
-  width: 1rem;
-  height: 1rem;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-}
-/* .reply-icon、.like-icon 未共用 */
 .reply-icon {
   background-image: url("./../assets/pictures/reply.png");
 }
 
 .like-icon {
   background-image: url("./../assets/pictures/like.png");
-}
-
-.icon-section:hover {
-  filter: brightness(0) saturate(100%) invert(38%) sepia(52%) saturate(2219%)
-    hue-rotate(2deg) brightness(107%) contrast(105%);
-}
-.counter {
-  color: var(--secondary-color);
-  font-size: 0.875rem;
-  font-weight: 600;
 }
 
 </style>

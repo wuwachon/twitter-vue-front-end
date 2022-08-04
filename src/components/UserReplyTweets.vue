@@ -8,8 +8,7 @@
             <p class="user-name">{{ currentUser.name }}</p>
             <p class="user-handle">
               @{{ currentUser.account }}<span>・</span>
-              <!-- todo: 尚未轉換成 mixins -->
-              <span class="time-stamp">{{ currentUser.createdAt }}</span>
+              <span class="time-stamp">{{ currentUser.createdAt | fromNow}}</span>
             </p>
           </div>
         </div>
@@ -31,6 +30,8 @@
 </template>
 
 <script>
+import { fromNowFilter } from "./../utils/mixins";
+
 const dummyData = {
   dummyReplyTweets: [
     {
@@ -61,6 +62,8 @@ const dummyData = {
 };
 export default {
   name: "UserReplyTweets",
+  mixins: [fromNowFilter],
+
   props: {
     currentUser: {
       type: Object,
@@ -84,24 +87,6 @@ export default {
 </script>
 
 <style scoped>
-/* todo: 一樣的加入共用 */
-
-.user-naming {
-  display: flex;
-  column-gap: 0.5rem;
-}
-
-.user-reply-tweets {
-  display: flex;
-  border-bottom: 1px solid var(--page-divider);
-  padding: 1rem;
-}
-
-.user-tweets {
-  display: flex;
-  border-bottom: 1px solid var(--page-divider);
-  padding: 1rem;
-}
 .user-image-sm {
   padding: 1rem;
   margin-right: 0.5rem;
@@ -109,11 +94,6 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.card-info {
-  display: flex;
-  flex-direction: column;
-}
-/* 新增 */
 .user-reply:hover {
   color: var(--main-color);
 }
