@@ -87,6 +87,10 @@ button[disabled] {
   opacity: 0.5;
 }
 
+button:focus {
+  outline: none;
+}
+
 /* form */
 .form-input {
   margin-bottom: 2rem;

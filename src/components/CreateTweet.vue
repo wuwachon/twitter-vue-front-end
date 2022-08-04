@@ -1,6 +1,6 @@
 <template>
-  <div class="modal-container">
-    <div class="modal-body">
+  <div class="tweet-container">
+    <div class="tweet-body">
       <img
         :src="currentUser.avatar"
         :alt="currentUser.name"
@@ -14,7 +14,7 @@
         maxlength="140"
       ></textarea>
     </div>
-    <div class="modal-footer">
+    <div class="tweet-footer">
       <span class="tweet-warning mx-3">{{ this.errorMessage }}</span>
       <button
         class="tweet-btn btn-bg btn-border"
@@ -70,6 +70,7 @@ export default {
         })
         // re-enable tweet button
         this.isProcessing = false;
+        this.tweetContent = "";
       } catch (error) {
         console.error(error.response.data)
         // re-enable tweet button
@@ -91,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-.modal-container {
+.tweet-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -101,8 +102,8 @@ export default {
   margin-bottom: 1rem;
 }
 
-/* modal body: 使用者圖示、文字輸入區 */
-.modal-body {
+/* tweet body: 使用者圖示、文字輸入區 */
+.tweet-body {
   flex-grow: 1;
   width: 100%;
   background-color: var(--dark-10);
@@ -126,8 +127,8 @@ export default {
   outline: none;
 }
 
-/* modal footer: warning message, push tweet button */
-.modal-footer {
+/* tweet footer: warning message, push tweet button */
+.tweet-footer {
   width: 100%;
   padding: 1rem;
   display: flex;
@@ -140,7 +141,7 @@ export default {
 }
 
 .tweet-btn {
-  width: 4rem;
+  width: 4.5rem;
   height: 2.5rem;
   border-radius: 50px;
 }

@@ -6,9 +6,7 @@
       </div>
       <div class="col-7 scrollable-part">
         <h4 class="main-title">首頁</h4>
-        <CreateTweet
-        @after-tweet-submit="afterTweetSubmit"
-        />
+        <CreateTweet @after-tweet-submit="afterTweetSubmit" />
         <div class="divider"></div>
         <div class="card-container">
           <TweetCard
@@ -23,7 +21,11 @@
         <PopularUsers />
       </div>
     </div>
-    <TweetModal :show="showTweetModal" @close="toggleTweetModal(false)" />
+    <TweetModal
+      :show="showTweetModal"
+      @close="toggleTweetModal(false)"
+      @after-tweet-submit="afterTweetSubmit"
+    />
     <ReplyModal :show="showReplyModal" @close="toggleReplyModal(false)" />
   </div>
 </template>
@@ -85,11 +87,11 @@ export default {
     },
     afterTweetSubmit() {
       this.fetchTweets();
-    }
+    },
   },
   computed: {
-    ...mapState(["currentUser"])
-  }
+    ...mapState(["currentUser"]),
+  },
 };
 </script>
 
