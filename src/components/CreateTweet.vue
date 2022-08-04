@@ -2,8 +2,8 @@
   <div class="modal-container">
     <div class="modal-body">
       <img
-        src="./../assets/pictures/dummyUser2.png"
-        alt="user-image"
+        :src="currentUser.avatar"
+        :alt="currentUser.name"
         class="user-image-sm"
       />
       <textarea
@@ -29,7 +29,8 @@
 
 <script>
 import tweetsAPI from "../apis/tweet";
-import { Toast } from "./../utils/helpers";
+import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   name: "CreateTweet",
@@ -56,12 +57,17 @@ export default {
         // POST api/tweets
         const { data } = await tweetsAPI.postTweet(content);
 
-        if(data.status !== "success") {
+        if(data.status === "error") {
           throw new Error(data.message)
         }
 
         // emit to Main.vue
         this.$emit("after-tweet-submit");
+        // notify user
+        Toast.fire({
+          icon: "success",
+          title: "成功送出推文"
+        })
         // re-enable tweet button
         this.isProcessing = false;
       } catch (error) {
@@ -78,6 +84,9 @@ export default {
       this.errorMessage = "";
     },
   },
+  computed: {
+    ...mapState(["currentUser"])
+  }
 };
 </script>
 

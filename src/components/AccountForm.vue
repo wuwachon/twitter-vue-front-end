@@ -166,7 +166,7 @@ export default {
         this.$router.push("/login");
       } catch (error) {
         this.isProcessing = false;
-        console.error(error.response);
+        console.error(error.response.data.message);
         Toast.fire({
           icon: "warning",
           title: "註冊失敗，請稍候再試",

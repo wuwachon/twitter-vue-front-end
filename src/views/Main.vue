@@ -36,7 +36,8 @@ import CreateTweet from "../components/CreateTweet";
 import TweetCard from "../components/TweetCard";
 import ReplyModal from "../components/ReplyModal";
 import tweetsAPI from "../apis/tweet";
-import { Toast } from "./../utils/helpers";
+import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   name: "Main",
@@ -75,7 +76,7 @@ export default {
           throw new Error(response.data.message);
         }
       } catch (error) {
-        console.error(error);
+        console.error(error.response.data.message);
         Toast.fire({
           icon: "error",
           title: "無法取得所有推文，請稍後再試",
@@ -86,6 +87,9 @@ export default {
       this.fetchTweets();
     }
   },
+  computed: {
+    ...mapState(["currentUser"])
+  }
 };
 </script>
 

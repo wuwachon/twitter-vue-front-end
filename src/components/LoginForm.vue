@@ -34,7 +34,6 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
 import { Toast } from "./../utils/helpers";
 import authorizationAPI from "./../apis/authorization";
 
@@ -73,18 +72,19 @@ export default {
         if (data.status === "error") {
           throw new Error(data.message);
         }
-
+        // token 存取至 localStorage 內
         localStorage.setItem("token", data.token);
 
         Toast.fire({
           icon: "success",
           title: "登入成功",
         });
+
         // 成功登入後轉址
         this.$router.push("/main");
       } catch (error) {
         this.isProcessing = false;
-
+        console.error(error.response.data.message);
         Toast.fire({
           icon: "warning",
           title: "請確認您輸入的帳號、密碼是否正確",

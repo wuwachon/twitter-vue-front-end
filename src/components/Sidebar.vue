@@ -10,7 +10,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="#" class="nav-link">
+          <router-link :to="{ name: 'user', params: { id: currentUser.id }}" class="nav-link">
             <div class="nav-icon person-icon"></div>
             <span class="nav-title">個人資料</span>
           </router-link>
@@ -32,10 +32,10 @@
     <div class="nav-bottom">
       <ul class="nav-list">
         <li class="nav-item">
-          <router-link to="/login" class="nav-link">
+          <div @click.prevent.stop="logout" class="nav-link">
             <div class="nav-icon quit-icon"></div>
             <span class="nav-title">登出</span>
-          </router-link>
+          </div>
         </li>
       </ul>
     </div>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Sidebar",
   methods: {
@@ -50,7 +52,14 @@ export default {
       // 通知 Main.vue or Reply.vue 要開啟 tweet modal
       this.$emit("show-tweet-modal", bool);
     },
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/login");
+    }
   },
+  computed: {
+    ...mapState(["currentUser"])
+  }
 };
 </script>
 
