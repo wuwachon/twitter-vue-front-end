@@ -36,11 +36,10 @@
         <!-- button -->
         <div class="d-flex justify-content-end">
           <button type="button" 
-          @click.stop.prevent="isEditing = true"
+          @click.stop.prevent="showEditModal(true)"
           class="btn btn-edit btn-border btn-50">
             編輯個人資料
           </button>
-          <!-- todo: 這邊要插入 UserEditModel -->
         </div>
       </div>
 
@@ -61,6 +60,7 @@
 
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
+// import UserEditModal from "../components/TweetCard";
 
 const dummyData = {
   data: {
@@ -106,12 +106,20 @@ export default {
         likeCount: 0,
         isFollowed: false,
       },
+      showProfileEditModal: false,
     };
   },
+  // computed: {
+  //   UserEditModal
+  // },
   created() {
     this.fetchUser();
   },
   methods: {
+    showEditModal(bool) {
+      // 通知 User.vue edit modal
+      this.$emit("show-edit-modal", bool);
+    },
     fetchUser() {
       this.currentUser = dummyData.data.currentUser;
       this.user = dummyData.data.user;

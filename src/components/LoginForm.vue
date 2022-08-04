@@ -92,8 +92,8 @@ export default {
         this.user.password = "";
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
