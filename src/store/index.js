@@ -31,6 +31,12 @@ export default new Vuex.Store({
       }
       // 將使用者的登入狀態改為 true
       state.isAuthenticated = true
+    },
+    // 登出，移除使用者 token
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      localStorage.removeItem('token')
     }
   },
   actions: {
@@ -46,8 +52,12 @@ export default new Vuex.Store({
         commit('setCurrentUser', {
           id, account, name, email, avatar, introduction, banner, role, createdAt, updatedAt
         })
+        // token 有效，回傳 true
+        return true
       } catch (error) {
-        console.error(error.message)
+        console.error(error.response.data)
+        // token 無效，回傳 false
+        return false
       }
     }
   },
