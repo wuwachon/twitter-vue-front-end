@@ -5,7 +5,8 @@
         <SideBar />
       </div>
       <div class="col-7">
-        <UserProfileCard />
+        <UserProfileCard 
+        @show-edit-modal="toggleEditModal(true)"/>
         <div>
           <ul class="nav-tab d-flex">
             <li v-for="tab in tabs" :key="tab.id" class="nav-item">
@@ -21,6 +22,7 @@
         <PopularUsers />
       </div>
     </div>
+    <UserEditModal :show="showEditModal" @close="toggleEditModal(false)" />
   </div>
 </template>
 
@@ -31,6 +33,7 @@
 import SideBar from "../components/Sidebar";
 import UserProfileCard from "./../components/UserProfileCard";
 import PopularUsers from "../components/PopularUsers";
+import UserEditModal from "../components/UserEditModal";
 
 const dummyData = {
   dummyUser: {
@@ -72,6 +75,7 @@ export default {
     SideBar,
     UserProfileCard,
     PopularUsers,
+    UserEditModal
   },
   created() {
     const { userId } = this.$route.params;
@@ -94,11 +98,15 @@ export default {
         },
       ],
       currentUser: {},
+      showEditModal: false,
     };
   },
   methods: {
     fetchUser() {
       this.currentUser = dummyData.dummyUser.currentUser;
+    },
+    toggleEditModal(bool) {
+      this.showEditModal = bool;
     },
   },
 };
@@ -110,6 +118,13 @@ export default {
 }
 .container > div {
   flex-wrap: nowrap;
+}
+.nav-link.active {
+  width: 80px;
+  box-shadow: 0px 2px ;
+  justify-content: center;
+  padding: 10px 15px;
+  /* todo: 線刪不掉 and 圓弧效果radius:100px  */
 }
 .navbar-nav {
   flex-direction: row;
