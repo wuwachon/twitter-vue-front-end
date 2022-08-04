@@ -10,19 +10,22 @@
   --circle-height: 56px;
   --circle-radius: 50%;
 }
+
 /* message setting*/
 .default-message-line {
   color: #657786;
   width: var(--message-line-width);
   height: var(--line-height);
 }
+
 .hover-message-line {
   color: var(--secondary-blue);
   width: var(--message-line-width);
   height: var(--line-height);
 }
+
 .error-message-line {
-  color: var(--danger-color); 
+  color: var(--danger-color);
   width: var(--message-line-width);
   height: var(--line-height);
 }
@@ -33,21 +36,25 @@
   width: var(--label-line-width);
   height: var(--line-height);
 }
+
 .hover-label-line {
   color: var(--secondary-blue);
   width: var(--label-line-width);
   height: var(--line-height);
 }
+
 .error-label-line {
-  color: var(--danger-color); 
+  color: var(--danger-color);
   width: var(--label-line-width);
   height: var(--line-height);
 }
+
 .disable-label-line {
   color: #F5F8FA;
   width: var(--label-line-width);
   height: var(--line-height);
 }
+
 .label {
   width: var(--label-width);
   height: var(--label-height);
@@ -98,25 +105,31 @@ button[disabled] {
   background: inherit;
 }
 
-.form-input input:hover, .form-input input:focus {
+.form-input input:hover,
+.form-input input:focus {
   border-bottom: 2px solid var(--secondary-blue);
   outline: none;
 }
-.form-input label{
+
+.form-input label {
   line-height: 22px;
 }
+
 .form-input-error input {
   outline: none;
   border-bottom: 2px solid var(--danger-color);
 }
+
 .form-input-title {
   margin-top: 5px;
   margin-left: 10px;
   color: var(--dark-80);
 }
+
 .form-input-text {
   color: var(--dark-60);
 }
+
 /* toast setting */
 .toast {
   width: 394px;
@@ -139,15 +152,19 @@ button[disabled] {
   padding: 1.25rem;
   border-radius: 50%;
 }
+
 .toast-circle.green {
   border: 2px solid var(--secondary-green);
 }
+
 .toast-circle.danger {
   border: 2px solid var(--secondary-danger);
 }
+
 .toast-circle.warning {
   border: 2px solid var(--secondary-warning);
 }
+
 .toast-circle.newTweet {
   border: 2px solid var(--secondary-blue);
 }
@@ -158,18 +175,22 @@ button[disabled] {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .toast-icon.green {
   background-image:
     require("./../assets/pictures/check.png");
 }
+
 .toast-icon.danger {
   background-image:
     require("./../assets/pictures/error.png");
 }
+
 .toast-icon.warning {
   background-image:
     require("./../assets/pictures/warning.png");
 }
+
 .toast-icon.newTweet {
   background-image:
     require("./../assets/pictures/newTweet.png");
@@ -252,15 +273,60 @@ button[disabled] {
   border-radius: 50%;
 }
 
-/* twitter user handle setting */
+/* 
+Tweet card
+user-tweets 
+user-reply-tweets
+user-like-tweets setting */
+.card-tweet,
+.user-tweets,
+.user-reply-tweets,
+.user-like-tweets {
+  display: flex;
+  border-bottom: 1px solid var(--page-divider);
+  padding: 1rem;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  margin-top: 9px;
+  display: flex;
+  column-gap: 2.58rem;
+}
+
+.icon-section {
+  display: flex;
+  column-gap: 9px;
+}
+
+.footer-icon {
+  width: 1rem;
+  height: 1rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+/* card header: user name, handle and creating tweet time */
+
+.user-name {
+  font-weight: 700;
+}
+
 .user-handle {
   color: var(--dark-70);
   font-size: 0.875rem;
   font-weight: 500;
 }
 
-.user-name {
-  font-weight: 700;
+.user-naming {
+  display: flex;
+  column-gap: 0.5rem;
 }
 
 /* card footer: reply & like icons and counter */
@@ -292,4 +358,51 @@ button[disabled] {
   color: var(--secondary-color);
   font-size: 0.875rem;
   font-weight: 600;
+}
+
+/* same as TweetModal and UserEditModal */
+.close-btn {
+  width: 1.5rem;
+  height: auto;
+  cursor: pointer;
+}
+
+/* modal header: close button */
+.modal-header {
+  width: 100%;
+  padding: 1.22rem;
+  border-bottom: 1px solid var(--page-divider);
+}
+
+/* 外層遮罩 */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-container {
+  position: fixed;
+  top: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: 300px;
+  border-radius: 0.875rem;
+  background-color: var(--dark-10);
+}
+
+.tweet-btn,
+.save-btn {
+  width: 4rem;
+  height: 2.5rem;
+  border-radius: 50px;
 }
