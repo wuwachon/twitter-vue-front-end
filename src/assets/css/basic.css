@@ -87,6 +87,10 @@ button[disabled] {
   opacity: 0.5;
 }
 
+button:focus {
+  outline: none;
+}
+
 /* form */
 .form-input {
   margin-bottom: 2rem;
@@ -316,6 +320,7 @@ user-like-tweets setting */
 
 .user-name {
   font-weight: 700;
+  color: var(--dark-100);
 }
 
 .user-handle {

@@ -14,7 +14,7 @@
         <!-- modal body: cited tweet, reply user icon and textarea -->
         <div class="modal-body">
           <!-- cited tweet card -->
-          <div class="card-tweet">
+          <div class="modal-tweet">
             <div class="user-image-sm tweet-user-image"></div>
             <div class="card-info">
               <div class="card-header">
@@ -157,7 +157,7 @@ export default {
 }
 
 /* cited tweet card */
-.card-tweet {
+.modal-tweet {
   display: flex;
   position: relative;
 }

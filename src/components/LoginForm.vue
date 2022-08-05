@@ -81,7 +81,7 @@ export default {
         });
 
         // 成功登入後轉址
-        this.$router.push("/main");
+        this.$router.push("/home");
       } catch (error) {
         this.isProcessing = false;
         console.error(error.response.data.message);

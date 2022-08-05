@@ -6,9 +6,7 @@
       </div>
       <div class="col-7 scrollable-part">
         <h4 class="main-title">首頁</h4>
-        <CreateTweet
-        @after-tweet-submit="afterTweetSubmit"
-        />
+        <CreateTweet @after-tweet-submit="afterTweetSubmit" />
         <div class="divider"></div>
         <div class="card-container">
           <TweetCard
@@ -16,6 +14,7 @@
             :key="tweet.id"
             :initial-tweet="tweet"
             @show-reply-modal="toggleReplyModal(true)"
+            @after-like-clicked="afterLikeClicked"
           />
         </div>
       </div>
@@ -23,8 +22,15 @@
         <PopularUsers />
       </div>
     </div>
-    <TweetModal :show="showTweetModal" @close="toggleTweetModal(false)" />
-    <ReplyModal :show="showReplyModal" @close="toggleReplyModal(false)" />
+    <TweetModal
+      :show="showTweetModal"
+      @close="toggleTweetModal(false)"
+      @after-tweet-submit="afterTweetSubmit"
+    />
+    <ReplyModal
+      :show="showReplyModal"
+      @close="toggleReplyModal(false)"
+    />
   </div>
 </template>
 
@@ -40,7 +46,7 @@ import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
-  name: "Main",
+  name: "Home",
   data() {
     return {
       showTweetModal: false,
@@ -85,11 +91,14 @@ export default {
     },
     afterTweetSubmit() {
       this.fetchTweets();
+    },
+    afterLikeClicked() {
+      console.log("TODO: fetch 該則 tweet 的 likeCount")
     }
   },
   computed: {
-    ...mapState(["currentUser"])
-  }
+    ...mapState(["currentUser"]),
+  },
 };
 </script>
 

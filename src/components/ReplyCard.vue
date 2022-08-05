@@ -1,83 +1,53 @@
 <template>
-  <div class="card-container">
-    <!-- Reply card -->
-    <div class="card-tweet">
-      <div class="user-image-sm"></div>
-      <div class="card-info">
-        <div class="card-header">
-          <div class="user-naming">
-            <p class="user-name">Apple</p>
-            <p class="user-handle">
-              @applepen<span>・</span><span class="time-stamp">3 小時</span>
-            </p>
-          </div>
-          <p class="user-handle">回覆 <span class="user-name-highlight">@apple</span></p>
-        </div>
-        <div class="card-body">
-          <p class="tweet-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque interdum rutrum sodales. Nullam mattis fermentum
-            libero, non volutpat.
+  <!-- Reply card -->
+  <div class="card-tweet">
+    <router-link :to="{ name: 'user', params: { id: reply.replyUser.id } }">
+    <img
+      class="user-image-sm"
+      :src="reply.replyUser.avatar | emptyImage"
+      alt="user-image"
+    />
+    </router-link>
+    <div class="card-info">
+      <div class="card-header">
+        <div class="user-naming">
+          <router-link :to="{ name: 'user', params: { id: reply.replyUser.id } }">
+          <p class="user-name">{{ reply.replyUser.name }}</p>
+          </router-link>
+          <p class="user-handle">
+            @{{ reply.replyUser.account }}<span>・</span><span class="time-stamp">{{ reply.createdAt | fromNow }}</span>
           </p>
         </div>
+        <p class="user-handle">
+          回覆 <span class="user-name-highlight">@{{ reply.tweetUser.account }}</span>
+        </p>
+      </div>
+      <div class="card-body">
+        <p class="tweet-content">
+          {{ reply.comment }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-const dummyData = {
-  data: {
-    user: {
-      id: 270,
-      name: "user3",
-      introduction: "hello,Nice to meet you",
-      avatar: null,
-      banner: null,
-    },
-    currentUser: {
-      id: 272,
-      account: "user5",
-      name: "user5",
-      email: "user5@example.com",
-      avatar: null,
-      introduction: null,
-      banner: null,
-      role: "user",
-      createdAt: "2022-07-27T05:06:05.000Z",
-      updatedAt: "2022-07-28T15:18:16.000Z",
-      Followers: [],
-      Followings: [],
+import { emptyImageFilter } from "../utils/mixins";
+import { fromNowFilter } from "../utils/mixins";
+
+export default {
+  name: "ReplyCard",
+  mixins: [emptyImageFilter, fromNowFilter],
+  props: {
+    initialReply: {
+      type: Object,
+      required: true
     },
   },
-};
-export default {
   data() {
     return {
-      currentUser: {},
-      user: {
-        id: 0,
-        account: "",
-        name: "",
-        introduction: "",
-        avatar: "",
-        banner: "",
-        tweetCount: 0,
-        followingCount: 0,
-        followerCount: 0,
-        likeCount: 0,
-        isFollowed: false,
-      },
+      reply: this.initialReply
     };
-  },
-  created() {
-    this.fetchUser();
-  },
-  methods: {
-    fetchUser() {
-      this.currentUser = dummyData.data.currentUser;
-      this.user = dummyData.data.user;
-    },
   },
 };
 </script>
@@ -91,11 +61,7 @@ export default {
 }
 
 .user-image-sm {
-  padding: 1rem;
   margin-right: 0.5rem;
-  background-image: url("./../assets/pictures/dummyUser.png");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .card-info {

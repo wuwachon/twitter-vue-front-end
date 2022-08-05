@@ -81,7 +81,7 @@ export default {
   mixins: [emptyImageFilter],
 
   props: {
-    // 從 Main.vue 傳來
+    // 從 Home.vue 傳來
     show: Boolean,
   },
 };
