@@ -2,7 +2,7 @@
   <div class="tweet-container">
     <div class="tweet-body">
       <img
-        :src="currentUser.avatar"
+        :src="currentUser.avatar | emptyImage"
         :alt="currentUser.name"
         class="user-image-sm"
       />
@@ -29,11 +29,13 @@
 
 <script>
 import tweetsAPI from "../apis/tweet";
+import { emptyImageFilter } from "../utils/mixins";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
   name: "CreateTweet",
+  mixins: [emptyImageFilter],
   data() {
     return {
       tweetContent: "",
@@ -61,7 +63,7 @@ export default {
           throw new Error(data.message)
         }
 
-        // emit to Main.vue
+        // emit to Home.vue
         this.$emit("after-tweet-submit");
         // notify user
         Toast.fire({

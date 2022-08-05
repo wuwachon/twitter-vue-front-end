@@ -4,7 +4,7 @@
       <div class="nav-logo"></div>
       <ul class="nav-list">
         <li class="nav-item">
-          <router-link to="/main" class="nav-link">
+          <router-link to="/home" class="nav-link">
             <div class="nav-icon home-icon"></div>
             <span class="nav-title">首頁</span>
           </router-link>
@@ -49,7 +49,7 @@ export default {
   name: "Sidebar",
   methods: {
     showTweetModal(bool) {
-      // 通知 Main.vue or Reply.vue 要開啟 tweet modal
+      // 通知 Home.vue or Tweet.vue 要開啟 tweet modal
       this.$emit("show-tweet-modal", bool);
     },
     logout() {
@@ -65,9 +65,7 @@ export default {
 
 <style scoped>
 .nav {
-  display: fixed;
-  left: 0;
-  top: 0;
+  margin-right: 1.5rem;
 }
 .nav-logo {
   margin: 0.8125rem 0 0 0.8125rem;

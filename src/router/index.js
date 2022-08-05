@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
-import Main from '../views/Main.vue'
+import Home from '../views/Home.vue'
 import NotFound from '../views/NotFound.vue'
 import store from '../store'
 
@@ -24,19 +24,14 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/main',
-    name: 'main',
-    component: Main
+    path: '/home',
+    name: 'home',
+    component: Home
   },
   {
-    path: '/reply',
-    name: 'reply',
-    component: () => import('../views/Reply.vue')
-  },
-  {
-    path: '/follows',
-    name: 'user-follows',
-    component: () => import('../views/UserFollows.vue')
+    path: '/tweet/:id',
+    name: 'tweet',
+    component: () => import('../views/Tweet.vue')
   },
   {
     path: '/admin/tweets',
@@ -86,6 +81,16 @@ const routes = [
         name: 'user-likes',
         component: () => import("../components/UserLikeTweets.vue"),
       },
+      {
+        path: '/followings',
+        name: 'user-followings',
+        component: () => import('../views/UserFollows.vue')
+      },
+      {
+        path: '/followers',
+        name: 'user-followers',
+        component: () => import('../views/UserFollows.vue')
+      }
     ]
   },
   {
@@ -127,7 +132,7 @@ router.beforeEach(async (to, from, next) => {
 
   // 如果 token 有效，而且使用者嘗試進入登入/註冊頁，轉址到首頁
   if (isAuthenticated && pathsWithoutAuthentications.includes(to.name)) {
-    next('/main')
+    next('/home')
     return
   }
 

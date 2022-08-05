@@ -14,6 +14,7 @@
             :key="tweet.id"
             :initial-tweet="tweet"
             @show-reply-modal="toggleReplyModal(true)"
+            @after-like-clicked="afterLikeClicked"
           />
         </div>
       </div>
@@ -26,7 +27,11 @@
       @close="toggleTweetModal(false)"
       @after-tweet-submit="afterTweetSubmit"
     />
-    <ReplyModal :show="showReplyModal" @close="toggleReplyModal(false)" />
+    <ReplyModal
+      :initial-spec-tweet="specTweet"
+      :show="showReplyModal"
+      @close="toggleReplyModal(false)"
+    />
   </div>
 </template>
 
@@ -88,6 +93,9 @@ export default {
     afterTweetSubmit() {
       this.fetchTweets();
     },
+    afterLikeClicked() {
+      console.log("TODO: fetch 該則 tweet 的 likeCount")
+    }
   },
   computed: {
     ...mapState(["currentUser"]),

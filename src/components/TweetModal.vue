@@ -14,7 +14,7 @@
         <!-- modal body: user icon and textarea -->
         <div class="modal-body">
           <img
-            :src="currentUser.avatar"
+            :src="currentUser.avatar | emptyImage"
             :alt="currentUser.name"
             class="user-image-sm"
           />
@@ -44,13 +44,15 @@
 
 <script>
 import tweetsAPI from "../apis/tweet";
+import { emptyImageFilter } from "../utils/mixins";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
   name: "TweetModal",
+  mixins: [emptyImageFilter],
   props: {
-    // 從 Main.vue 傳來
+    // 從 Home.vue 傳來
     show: Boolean,
   },
   data() {
@@ -80,7 +82,7 @@ export default {
           throw new Error(data.message);
         }
 
-        // emit to Main.vue
+        // emit to Home.vue
         this.$emit("after-tweet-submit");
         // notify user
         Toast.fire({
