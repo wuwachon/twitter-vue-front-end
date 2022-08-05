@@ -90,6 +90,10 @@ export default {
 
       } catch (error) {
         console.error(error.response.data.message);
+        Toast.fire({
+          icon: "error",
+          title: error.response.data.message,
+        });
       }
     },
   },

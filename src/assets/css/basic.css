@@ -320,6 +320,7 @@ user-like-tweets setting */
 
 .user-name {
   font-weight: 700;
+  color: var(--dark-100);
 }
 
 .user-handle {

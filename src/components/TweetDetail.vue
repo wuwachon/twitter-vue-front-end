@@ -1,29 +1,123 @@
 <template>
   <div class="tweet-container">
     <div class="tweet-header">
-      <div class="user-image-sm"></div>
+      <router-link :to="{ name: 'user', params: { id: tweet.user.id } }">
+        <img
+          :src="tweet.user.avatar | emptyImage"
+          :alt="tweet.user.name"
+          class="user-image-sm"
+        />
+      </router-link>
       <div class="user-naming">
-        <p class="user-name">Apple</p>
-        <span class="user-handle">@apple</span>
+        <router-link :to="{ name: 'user', params: { id: tweet.user.id } }">
+          <p class="user-name">{{ tweet.user.name }}</p>
+        </router-link>
+        <span class="user-handle">@{{ tweet.user.account }}</span>
       </div>
     </div>
     <div class="tweet-body">
-      Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-      cillum dolor. Voluptate exercitation incididunt aliquip deserunt.
+      {{ tweet.description }}
     </div>
     <div class="tweet-footer">
-      <span class="time-stamp">上午 10:05・2021年11月10日</span>
+      <span class="time-stamp">{{
+        tweet.createdAt | customLongDateFormat
+      }}</span>
     </div>
     <div class="counter-section">
-      <span class="reply-count">34 回覆</span>
-      <span class="like-count">808 喜歡次數</span>
+      <span class="reply-count"><span class="reply-number">{{ tweet.replyCounts }} </span>回覆</span>
+      <span class="like-count"><span class="like-number">{{ tweet.likeCounts }}</span> 喜歡次數</span>
     </div>
     <div class="icon-section">
-      <div class="footer-icon reply-icon"></div>
-      <div class="footer-icon like-icon"></div>
+      <div
+        class="footer-icon reply-icon"
+        @click.stop.prevent="showReplyModal(true)"
+      ></div>
+      <div
+        class="footer-icon like-icon"
+        :active="tweet.isLiked"
+        @click.stop.prevent="
+          toggleLike(initialSpecTweet.isLiked, initialSpecTweet.id)
+        "
+      ></div>
     </div>
   </div>
 </template>
+
+<script>
+import { emptyImageFilter } from "../utils/mixins";
+import { customLongDateFormatter } from "../utils/mixins";
+import likesAPI from "../apis/like";
+import { Toast } from "../utils/helpers";
+
+export default {
+  name: "TweetDetail",
+  mixins: [emptyImageFilter, customLongDateFormatter],
+  props: {
+    initialSpecTweet: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    tweet: {
+      get() {
+        return this.initialSpecTweet;
+      },
+      set(value) {
+        this.$emit("update-tweet", value);
+      },
+    },
+  },
+  methods: {
+    showReplyModal(bool) {
+      // 通知 Tweet.vue 要開啟 reply modal
+      this.$emit("show-reply-modal", bool);
+    },
+    async toggleLike(isTweetLiked, tweetId) {
+      try {
+        // 已經對該 tweet 點過 like
+        if (isTweetLiked) {
+          // POST /api/tweets/:id/unlike 取消 like
+          const response = await likesAPI.unLikeTweet(tweetId);
+
+          // 錯誤狀態處理
+          if (response.data.status === "error") {
+            throw new Error(response.data.message);
+          }
+
+          // 更新 like 數
+          this.tweet.likeCounts--;
+
+          // 尚未對該 tweet 點過 like
+        } else {
+          // POST /api/tweets/:id/like 加入 like
+          const response = await likesAPI.likeTweet(tweetId);
+
+          // 錯誤狀態處理
+          if (response.data.status === "error") {
+            throw new Error(response.data.message);
+          }
+
+          // 更新 like 數
+          this.tweet.likeCounts++;
+        }
+
+        // 修改該 tweet 的 like 狀態
+        this.tweet.isLiked = !this.tweet.isLiked;
+
+        // 通知 parent view likecount 有改變
+        this.$emit("after-like-clicked");
+      } catch (error) {
+        console.error(error.response.data.message);
+        Toast.fire({
+          icon: "error",
+          title: error.response.data.message,
+        });
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 .tweet-container {
@@ -40,11 +134,7 @@
 }
 
 .user-image-sm {
-  padding: 1rem;
   margin-right: 0.5rem;
-  background-image: url("./../assets/pictures/dummyUser2.png");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .user-naming {
@@ -107,11 +197,20 @@
     hue-rotate(2deg) brightness(107%) contrast(105%);
 }
 
+.reply-number,
+.like-number {
+  color: var(--dark-100);
+}
+
 .reply-icon {
   background-image: url("./../assets/pictures/reply.png");
 }
 
 .like-icon {
   background-image: url("./../assets/pictures/like.png");
+}
+
+.like-icon[active] {
+  background-image: url("./../assets/pictures/icon_like.png");
 }
 </style>

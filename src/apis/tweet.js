@@ -12,5 +12,10 @@ export default {
     return apiHelper.post('/tweets', {"description": `${content}`}, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  getSpecTweet(tweetId) {
+    return apiHelper.get(`/tweets/${tweetId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }
