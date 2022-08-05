@@ -50,7 +50,7 @@ import repliesAPI from "../apis/reply";
 import { Toast } from "../utils/helpers";
 
 export default {
-  name: "Reply",
+  name: "Tweet",
   data() {
     return {
       showTweetModal: false,
@@ -84,6 +84,12 @@ export default {
     const { id } = this.$route.params;
     this.fetchSpecTweet(id);
     this.fetchReplies(id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params;
+    this.fetchSpecTweet(id);
+    this.fetchReplies(id);
+    next();
   },
   methods: {
     toggleTweetModal(bool) {

@@ -28,7 +28,6 @@
       @after-tweet-submit="afterTweetSubmit"
     />
     <ReplyModal
-      :initial-spec-tweet="specTweet"
       :show="showReplyModal"
       @close="toggleReplyModal(false)"
     />
@@ -47,7 +46,7 @@ import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
-  name: "Main",
+  name: "Home",
   data() {
     return {
       showTweetModal: false,
