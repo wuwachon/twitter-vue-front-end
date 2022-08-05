@@ -4,21 +4,17 @@
       <img :src="require('./../assets/pictures/logo.png')" width="50px" />
     </div>
     <p class="title mx-auto mb-4">建立你的帳號</p>
-  <AccountForm/>  
+  <RegisterAccountForm/>  
   </div>
 </template>
 
-<style scoped>
-
-</style>
-
 <script>
-import AccountForm from "./../components/AccountForm";
+import RegisterAccountForm from "./../components/RegisterAccountForm";
 
 export default {
   name: "Register",
   components: {
-    AccountForm,
+    RegisterAccountForm,
   },
 }
 </script>

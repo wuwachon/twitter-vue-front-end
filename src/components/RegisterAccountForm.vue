@@ -62,7 +62,7 @@
         name="checkPassword"
         id="checkPassword"
         v-model="user.checkPassword"
-        placeholder="請設定密碼"
+        placeholder="請再次輸入密碼"
         required
       />
       <div class="d-flex justify-content-between"></div>
@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import { Toast } from "./../utils/helpers";
-import authorizationAPI from "./../apis/authorization";
+import { Toast } from "../utils/helpers";
+import authorizationAPI from "../apis/authorization";
 
 export default {
   data() {
@@ -169,7 +169,7 @@ export default {
         console.error(error.response.data.message);
         Toast.fire({
           icon: "warning",
-          title: "註冊失敗，請稍候再試",
+          title: error.response.data.message,
         });
       }
     },
