@@ -7,9 +7,9 @@
         <div class="card-info">
           <div class="card-header">
             <div class="user-naming">
-              <p class="user-name">{{ tweet.User.name }}</p>
+              <p class="user-name">{{ tweet.user.name }}</p>
               <p class="user-handle">
-                @{{ tweet.User.account }}<span>・</span
+                @{{ tweet.user.account }}<span>・</span
                 ><span class="created-at">{{ tweet.createdAt | fromNow }}</span>
               </p>
             </div>
@@ -20,10 +20,12 @@
             </p>
           </div>
         </div>
-        <button 
-        @click="deleteTweet(tweet.id)"
-        class="delete-tweet">
-          <img class="card-delete" src="../assets/pictures/cancel.png" alt="" />
+        <button @click="deleteTweet(tweet.id)" class="delete-tweet">
+          <img
+            class="card-delete"
+            src="../assets/pictures/cancel.png"
+            alt="delete-btn"
+          />
         </button>
       </div>
     </div>
@@ -31,49 +33,9 @@
 </template>
 
 <script>
-const dummyData = {
-  data: {
-    tweets: [
-      {
-        id: 11,
-        description: "Assumenda asperiores et blanditiis. Laborum recusa",
-        createdAt: "2022-07-30T07:27:36.000Z",
-        updatedAt: "2022-07-30T07:27:36.000Z",
-        UserId: 2,
-        User: {
-          name: "user1",
-          account: "user1",
-          avatar: null,
-        },
-      },
-      {
-        id: 12,
-        description: "Aut architecto numquam aspernatur officia aspernat",
-        createdAt: "2022-07-30T07:27:36.000Z",
-        updatedAt: "2022-07-30T07:27:36.000Z",
-        UserId: 2,
-        User: {
-          name: "user2",
-          account: "user2",
-          avatar: null,
-        },
-      },
-      {
-        id: 13,
-        description: "Sed ut perspiciatis unde omnis iste natus error si",
-        createdAt: "2022-07-30T07:27:36.000Z",
-        updatedAt: "2022-07-30T07:27:36.000Z",
-        UserId: 2,
-        User: {
-          name: "user3",
-          account: "user3",
-          avatar: null,
-        },
-      },
-    ],
-  },
-};
 import { fromNowFilter } from "./../utils/mixins";
+import { Toast } from "../utils/helpers";
+import adminAPI from "../apis/admin";
 
 export default {
   mixins: [fromNowFilter],
@@ -87,12 +49,29 @@ export default {
     this.fetchTweets();
   },
   methods: {
-    fetchTweets() {
-      this.tweets = dummyData.data.tweets;
+    async fetchTweets() {
+      try {
+        const { data } = await adminAPI.getAllTweets();
+        this.tweets = data;
+      } catch (error) {
+        console.error(error.response.data.message);
+      }
     },
-    deleteTweet(tweetId) {
-      this.tweets = this.tweets.filter(tweet => tweet.id !== tweetId );
-    }
+    async deleteTweet(tweetId) {
+      try {
+        const response = await adminAPI.deleteTweet(tweetId);
+        if (response.data.status === "error") {
+          throw new Error(response.data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "刪除推文成功"
+        })
+        this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+      } catch (error) {
+        console.error(error.response.data.message);
+      }
+    },
   },
 };
 </script>
