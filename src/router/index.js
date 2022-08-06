@@ -34,28 +34,6 @@ const routes = [
     component: () => import('../views/Tweet.vue')
   },
   {
-    path: '/admin/tweets',
-    name: 'admin-tweets',
-    component: () => import('../views/AdminMain.vue'),
-    children: [
-      {
-        path: '/admin/tweets',
-        name: 'admin-tweets',
-        component: () => import('../components/AdminTweetList.vue'),
-      },
-      {
-        path: '/admin/users',
-        name: 'admin-users',
-        component: () => import('../components/AdminUserList.vue')
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'admin-login',
-    component: () => import('../views/AdminLogin.vue')
-  },
-  {
     path: '/user/:id',
     name: 'user',
     component: () => import('../views/User.vue')
@@ -97,6 +75,21 @@ const routes = [
     path: '/setting',
     name: 'account-setting',
     component: () => import('../views/AccountSetting.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin-login',
+    component: () => import('../views/AdminLogin.vue')
+  },
+  {
+    path: '/admin/tweets',
+    name: 'admin-tweets',
+    component: () => import('../views/AdminTweet.vue')
+  },  
+  {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('../views/AdminUsers.vue')
   },
   {
     path: '*',

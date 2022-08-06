@@ -5,7 +5,7 @@
       <AdminSidebar />
     </div>
     <div class="col">
-      <router-view />
+      <AdminUserList />
     </div>
   </div>
 </div>
@@ -13,11 +13,13 @@
 
 <script>
 import AdminSidebar from "../components/AdminSidebar.vue";
+import AdminUserList from "../components/AdminUserList.vue";
 
 export default {
-  name: "AdminMain",
+  name: "AdminTweet",
   components: {
     AdminSidebar,
+    AdminUserList
   },
 };
 </script>
