@@ -20,10 +20,10 @@
     <div class="nav-bottom">
       <ul class="nav-list">
         <li class="nav-item">
-          <router-link to="/login" class="nav-link">
+          <div @click.prevent.stop="logout" class="nav-link">
             <div class="nav-icon quit-icon"></div>
             <span class="nav-title">登出</span>
-          </router-link>
+          </div>
         </li>
       </ul>
     </div>
@@ -37,6 +37,12 @@ export default {
     return {
       inTweetList: this.$route.name === "admin-tweets",
       inUserList: this.$route.name === "admin-users"
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/login");
     }
   },
 };

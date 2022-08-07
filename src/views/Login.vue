@@ -57,7 +57,6 @@ export default {
       user: {
         account: "",
         password: "",
-        isAdmin: false,
       },
       isProcessing: false,
     };

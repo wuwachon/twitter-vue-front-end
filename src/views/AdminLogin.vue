@@ -53,7 +53,6 @@ export default {
       user: {
         account: "",
         password: "",
-        isAdmin: false,
       },
       isProcessing: false,
     };
@@ -82,7 +81,7 @@ export default {
           throw new Error(data.message);
         }
         // token 存取至 localStorage 內
-        localStorage.setItem("admin-token", data.token);
+        localStorage.setItem("token", data.token);
 
         Toast.fire({
           icon: "success",
