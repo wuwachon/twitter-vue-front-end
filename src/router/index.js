@@ -34,28 +34,6 @@ const routes = [
     component: () => import('../views/Tweet.vue')
   },
   {
-    path: '/admin/tweets',
-    name: 'admin-tweets',
-    component: () => import('../views/AdminMain.vue'),
-    children: [
-      {
-        path: '/admin/tweets',
-        name: 'admin-tweets',
-        component: () => import('../components/AdminTweetList.vue'),
-      },
-      {
-        path: '/admin/users',
-        name: 'admin-users',
-        component: () => import('../components/AdminUserList.vue')
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'admin-login',
-    component: () => import('../views/AdminLogin.vue')
-  },
-  {
     path: '/user/:id',
     name: 'user',
     component: () => import('../views/User.vue')
@@ -81,22 +59,37 @@ const routes = [
         name: 'user-likes',
         component: () => import("../components/UserLikeTweets.vue"),
       },
-      {
-        path: '/followings',
-        name: 'user-followings',
-        component: () => import('../views/UserFollows.vue')
-      },
-      {
-        path: '/followers',
-        name: 'user-followers',
-        component: () => import('../views/UserFollows.vue')
-      }
     ]
+  },
+  {
+    path: '/user/:id/followings',
+    name: 'user-followings',
+    component: () => import('../views/UserFollowings.vue')
+  },
+  {
+    path: '/user/:id/followers',
+    name: 'user-followers',
+    component: () => import('../views/UserFollowers.vue')
   },
   {
     path: '/setting',
     name: 'account-setting',
     component: () => import('../views/AccountSetting.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin-login',
+    component: () => import('../views/AdminLogin.vue')
+  },
+  {
+    path: '/admin/tweets',
+    name: 'admin-tweets',
+    component: () => import('../views/AdminTweet.vue')
+  },  
+  {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('../views/AdminUsers.vue')
   },
   {
     path: '*',
@@ -111,29 +104,51 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  // localStorage 取出 token
+  // localStorage 取出 token，可能為 user or admin
   const token = localStorage.getItem('token')
-  // 預設使用者為未驗證
-  let isAuthenticated = false
-
-  // 有 token 才向後端驗證
-  if(token) {
-    isAuthenticated = await store.dispatch('fetchCurrentUser')
-  }
 
   // 不需要 token 就可檢視之頁面
   const pathsWithoutAuthentications = ['login', 'register', 'admin-login']
 
-  // 如果 token 無效，而且使用者想進入需要權限才能檢視的頁面，轉址到登入頁
-  if (!isAuthenticated && !pathsWithoutAuthentications.includes(to.name)) {
+  // 管理者可以檢視的頁面
+  const pathsAdminOnly = ['admin-login', 'admin-tweets', 'admin-users'] 
+
+  // 無 token 且想進入需要權限的頁面，一律轉登入頁
+  if(!token && !pathsWithoutAuthentications.includes(to.name)) {
     next('/login')
     return
   }
 
-  // 如果 token 有效，而且使用者嘗試進入登入/註冊頁，轉址到首頁
-  if (isAuthenticated && pathsWithoutAuthentications.includes(to.name)) {
-    next('/home')
-    return
+  // 有 token 才向後端驗證
+  if (token) {
+  // 會回傳當前 role & isAuthenticated(bool)
+  const { role, isAuthenticated } = await store.dispatch('fetchCurrentUser')
+    // 結果 1：如果 token 無效，而且使用者想進入需要權限才能檢視的頁面，轉址到登入頁
+    if (!isAuthenticated && !pathsWithoutAuthentications.includes(to.name)) {
+      next('/login')
+      return
+    }
+    // 結果 2：如果 token 身分是 user 且想進入登入/註冊頁，轉址回前台推文首頁（Home.vue）
+    if (role === "user" && isAuthenticated && pathsWithoutAuthentications.includes(to.name)) {
+      next('/home')
+      return
+    }
+    
+    // 結果 3：如果 token 身分是 user，而且嘗試進入後台頁面，轉址到推文首頁
+    if (role === "user" && isAuthenticated && pathsAdminOnly.includes(to.name)) {
+      next('/home')
+      return
+    }
+    // 結果 4：如果 token 身分是 admin，而且管理者嘗試進入後台登入頁，轉址到後台管理首頁
+    if (role === "admin" && isAuthenticated && pathsWithoutAuthentications.includes(to.name)) {
+      next('/admin/tweets')
+      return
+    }
+    // 結果 5：如果 token 身分是 admin，而且管理者嘗試進入前台頁面，轉址到後台管理首頁
+    if (role === "admin" && isAuthenticated && !pathsAdminOnly.includes(to.name)){
+      next('/admin/tweets')
+      return
+    }
   }
 
   next()

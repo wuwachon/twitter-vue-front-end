@@ -52,15 +52,13 @@ export default new Vuex.Store({
         commit('setCurrentUser', {
           id, account, name, email, avatar, introduction, banner, role, createdAt, updatedAt
         })
-        // token 有效，回傳 true
-        return true
+        // token 有效，回傳 role & isAuthenticated
+        return { role: this.state.currentUser.role , isAuthenticated: true }
       } catch (error) {
         console.error(error.response.data)
-        // token 無效，回傳 false
-        return false
+        // token 無效，回傳 role & isAuthenticated
+        return { role: '', isAuthenticated: false }
       }
     }
   },
-  modules: {
-  }
 })

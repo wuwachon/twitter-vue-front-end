@@ -62,29 +62,23 @@
         name="checkPassword"
         id="checkPassword"
         v-model="user.checkPassword"
-        placeholder="請設定密碼"
+        placeholder="請再次輸入密碼"
         required
       />
       <div class="d-flex justify-content-between"></div>
     </div>
-    <div>
-      <button
-        type="submit"
-        class="btn-bg btn-border btn-50 w-100"
-        :disabled="isProcessing"
-      >
-        {{ isProcessing ? "處理中..." : "註冊" }}
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn-bg btn-border" :disabled="isProcessing">
+        {{ isProcessing ? "處理中..." : "儲存" }}
       </button>
-      <div class="text-center mb-5">
-        <router-link to="/login" class="mx-auto text-blue">取消 </router-link>
-      </div>
     </div>
   </form>
 </template>
 
 <script>
-import { Toast } from "./../utils/helpers";
-import authorizationAPI from "./../apis/authorization";
+import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
+import authorizationAPI from "../apis/authorization";
 
 export default {
   data() {
@@ -100,6 +94,12 @@ export default {
       isAccountTooLong: false,
       isProcessing: false,
     };
+  },
+  created() {
+    this.user = this.currentUser;
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
   methods: {
     async handleSubmit() {
@@ -131,7 +131,7 @@ export default {
         }
 
         // 帳號超過 20 字，防止請求送出
-        if(this.user.account.length > 20) {
+        if (this.user.account.length > 20) {
           this.isAccountTooLong = true;
           return;
         }
@@ -145,13 +145,16 @@ export default {
         // 暫時關閉按鈕
         this.isProcessing = true;
 
-        const response = await authorizationAPI.register({
-          account: this.user.account,
-          name: this.user.name,
-          email: this.user.email,
-          password: this.user.password,
-          checkPassword: this.user.checkPassword,
-        });
+        const response = await authorizationAPI.editUserData(
+          this.currentUser.id,
+          {
+            account: this.user.account,
+            name: this.user.name,
+            email: this.user.email,
+            password: this.user.password,
+            checkPassword: this.user.checkPassword,
+          }
+        );
 
         if (response.data.status === "error") {
           throw new Error(response.data.message);
@@ -159,17 +162,17 @@ export default {
 
         Toast.fire({
           icon: "success",
-          title: "註冊成功！請登入帳戶",
+          title: "更改成功！",
         });
+        // 重新開啟按鈕
+        this.isProcessing = false;
 
-        // 註冊成功，跳回登入頁
-        this.$router.push("/login");
       } catch (error) {
         this.isProcessing = false;
         console.error(error.response.data.message);
         Toast.fire({
           icon: "warning",
-          title: "註冊失敗，請稍候再試",
+          title: error.response.data.message,
         });
       }
     },
@@ -178,13 +181,14 @@ export default {
 </script>
 
 <style scoped>
+form {
+  padding: 1.5rem;
+}
+
 button {
-  opacity: 1;
+  border-radius: 50px;
   margin-top: 40px;
-  margin-bottom: 22px;
-  padding: 8px 158px 8px 158px;
-  background-color: var(--main-color);
-  cursor: pointer;
+  padding: 8px 24px 8px 24px;
 }
 
 .form-input:nth-child(5) {

@@ -5,6 +5,9 @@ export const emptyImageFilter = {
   filters: {
     emptyImage(src) {
       return src || require('../assets/pictures/dummyUser.png')
+    },
+    emptyBanner(src) {
+      return src || require('../assets/pictures/banner.png')
     }
   }
 }

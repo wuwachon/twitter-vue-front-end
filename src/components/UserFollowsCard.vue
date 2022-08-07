@@ -1,14 +1,5 @@
 <template>
   <div class="card-group">
-    <!-- Followers / Following tabs -->
-    <ul class="tab">
-      <li class="tab-item">
-        <a class="tab-link active" aria-current="page" href="#">追隨者</a>
-      </li>
-      <li class="tab-item">
-        <a class="tab-link" href="#">正在追隨</a>
-      </li>
-    </ul>
     <!-- User Followers/ following card list -->
     <div class="card-container">
       <div class="card-follow">
@@ -53,60 +44,23 @@
 </template>
 
 <script>
-const dummyData = {
-  data: {
-    user: {
-      id: 270,
-      name: "user3",
-      introduction: "hello,Nice to meet you",
-      avatar: null,
-      banner: null,
-    },
-    currentUser: {
-      id: 272,
-      account: "user5",
-      name: "user5",
-      email: "user5@example.com",
-      avatar: null,
-      introduction: null,
-      banner: null,
-      role: "user",
-      createdAt: "2022-07-27T05:06:05.000Z",
-      updatedAt: "2022-07-28T15:18:16.000Z",
-      Followers: [],
-      Followings: [],
-    },
-  },
-};
-
 export default {
+  name: "UserFollowsCard",
   data() {
-    return {
-      currentUser: {},
-      user: {
-        id: 0,
-        account: "",
-        name: "",
-        introduction: "",
-        avatar: "",
-        banner: "",
-        tweetCount: 0,
-        followingCount: 0,
-        followerCount: 0,
-        likeCount: 0,
-        isFollowed: false,
-      },
-    };
+    return {};
   },
   created() {
-    this.fetchUser();
+    switch (this.$route.name) {
+      case "user-followers":
+        // 顯示[追隨者]清單
+        break;
+
+      case "user-followings":
+        // 顯示[正在追隨]清單
+        break;
+    }
   },
-  methods: {
-    fetchUser() {
-      this.currentUser = dummyData.data.currentUser;
-      this.user = dummyData.data.user;
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -137,21 +91,6 @@ export default {
   color: var(--dark-100);
 }
 
-/* Followers / Following tabs */
-.tab {
-  padding: 1rem;
-  display: flex;
-  border-bottom: 1px solid #e6ecf0;
-}
-.tab-link {
-  padding: 1rem;
-  color: #657786;
-  font-weight: 700;
-}
-.tab-link.active {
-  color: var(--main-color);
-  border-bottom: 2px solid var(--main-color);
-}
 /* User Followers/ following card list */
 .card-container {
   display: flex;
@@ -165,13 +104,9 @@ export default {
 }
 
 .user-image {
-  padding: 1rem;
   margin-right: 0.5rem;
   width: 50px;
   height: 50px;
-  background-image: url("./../assets/pictures/dummyUser.png");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .card-info {

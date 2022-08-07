@@ -1,8 +1,9 @@
 import { apiHelper } from './../utils/helpers'
+const getToken = () => localStorage.getItem('token')
 
 export default {
   // 帶入需要的參數
-  loginIn({ account, password }) {
+  login({ account, password }) {
     // 這裡 return 的會是一個 Promise
     return apiHelper.post('/users/signin', {
       account,
@@ -19,4 +20,15 @@ export default {
       checkPassword
     })
   },
+  editUserData(userId, { account, name, email, password, checkPassword }) {
+    return apiHelper.patch(`/users/${userId}/setting`, {
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    }, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  }
 }
