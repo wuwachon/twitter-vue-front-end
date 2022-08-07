@@ -67,9 +67,14 @@ export default {
           icon: "success",
           title: "刪除推文成功"
         })
+        // 即時更新畫面上的 tweets
         this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
       } catch (error) {
         console.error(error.response.data.message);
+        Toast.fire({
+          icon: "success",
+          title: "刪除推文過程發生問題，請再試一次"
+        })
       }
     },
   },

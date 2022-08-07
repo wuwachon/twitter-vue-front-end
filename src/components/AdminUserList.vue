@@ -5,7 +5,7 @@
       <div class="card" v-for="user in users" :key="user.id">
         <div class="bg position-relative">
           <img
-            :src="require('../assets/pictures/dummy-bg.png')"
+            :src="user.banner | emptyBanner"
             class="card-img-top"
             alt="..."
           />
@@ -13,7 +13,7 @@
         <div class="person-img">
           <img
             class="avatar-img rounded-circle position-absolute"
-            :src="user.image | emptyImage"
+            :src="user.avatar | emptyImage"
           />
         </div>
         <div class="user-information">
@@ -23,10 +23,10 @@
           <!-- 推文區、按讚區 -->
             <div class="icon-section me-3">
               <div class="footer-icon tweets-icon"></div>
-              <span class="counter tweets-count">13</span>
+              <span class="counter tweets-count">{{ user.tweetCounts }}</span>
             
               <div class="footer-icon like-icon"></div>
-              <span class="counter like-count">76</span>
+              <span class="counter like-count">{{ user.likeCounts }}</span>
             </div>
 
           <!-- 追蹤者區 -->
@@ -44,143 +44,8 @@
 
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
+import adminAPI from "../apis/admin";
 
-const dummyData = {
-  users: [
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 2,
-      account: "user1",
-      name: "user1",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-    {
-      id: 3,
-      account: "user2",
-      name: "user2",
-      avatar: null,
-      role: "user",
-      tweetCounts: 10,
-      likeCounts: 0,
-      followingCounts: 0,
-      followerCounts: 0,
-    },
-  ],
-};
 export default {
   mixins: [emptyImageFilter],
   data() {
@@ -192,8 +57,9 @@ export default {
     this.fetchUserList();
   },
   methods: {
-    fetchUserList() {
-      this.users = dummyData.users;
+    async fetchUserList() {
+      const { data } = await adminAPI.getAllUsers();
+      this.users = data;
     },
   },
 };
