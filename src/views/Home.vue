@@ -29,7 +29,7 @@
     <ReplyModal
       :show="showReplyModal"
       :initial-spec-tweet.sync="selectedTweet"
-      @close="toggleReplyModal(false, tweet)"
+      @close="toggleReplyModal(false)"
       @after-reply-submit="afterReplySubmit"
     />
   </div>
