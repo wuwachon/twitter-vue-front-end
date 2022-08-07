@@ -170,10 +170,20 @@ export default {
       } catch (error) {
         this.isProcessing = false;
         console.error(error.response.data.message);
-        Toast.fire({
-          icon: "warning",
-          title: error.response.data.message,
-        });
+        switch (error.response.data.message) {
+          case "Error: The account has already been used by someone else.":
+            Toast.fire({
+              icon: "error",
+              title: "account 已重複註冊！",
+            });
+            break;
+          case "Error: The email has already been used by someone else.":
+            Toast.fire({
+              icon: "error",
+              title: "email 已重複註冊！",
+            });
+            break;
+        }
       }
     },
   },

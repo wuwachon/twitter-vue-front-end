@@ -21,7 +21,7 @@
         :disabled="isProcessing"
         @click.prevent.stop="handleTweetSubmit(tweetContent)"
       >
-        {{ isProcessing ? "處理中..." : "推文" }}
+        推文
       </button>
     </div>
   </div>
