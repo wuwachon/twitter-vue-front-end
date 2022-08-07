@@ -13,8 +13,7 @@
             v-for="tweet in allTweets"
             :key="tweet.id"
             :initial-tweet="tweet"
-            @show-reply-modal="toggleReplyModal(true)"
-            @after-like-clicked="afterLikeClicked"
+            @show-reply-modal="toggleReplyModal(true, tweet)"
           />
         </div>
       </div>
@@ -29,7 +28,9 @@
     />
     <ReplyModal
       :show="showReplyModal"
-      @close="toggleReplyModal(false)"
+      :initial-spec-tweet.sync="selectedTweet"
+      @close="toggleReplyModal(false, tweet)"
+      @after-reply-submit="afterReplySubmit"
     />
   </div>
 </template>
@@ -52,6 +53,8 @@ export default {
       showTweetModal: false,
       showReplyModal: false,
       allTweets: [],
+      // for ReplyModal.vue
+      selectedTweet: {}
     };
   },
   components: {
@@ -69,8 +72,9 @@ export default {
     toggleTweetModal(bool) {
       this.showTweetModal = bool;
     },
-    toggleReplyModal(bool) {
+    toggleReplyModal(bool, tweet) {
       this.showReplyModal = bool;
+      this.selectedTweet = tweet;
     },
     async fetchTweets() {
       try {
@@ -92,8 +96,8 @@ export default {
     afterTweetSubmit() {
       this.fetchTweets();
     },
-    afterLikeClicked() {
-      console.log("TODO: fetch 該則 tweet 的 likeCount")
+    afterReplySubmit() {
+      this.fetchTweets();
     }
   },
   computed: {

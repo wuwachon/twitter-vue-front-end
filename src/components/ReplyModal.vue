@@ -15,34 +15,42 @@
         <div class="modal-body">
           <!-- cited tweet card -->
           <div class="modal-tweet">
-            <div class="user-image-sm tweet-user-image"></div>
+            <img
+              class="user-image-sm tweet-user-image"
+              :src="initialSpecTweet.user.avatar | emptyImage"
+            />
             <div class="card-info">
               <div class="card-header">
                 <div class="user-naming">
-                  <p class="user-name">Apple</p>
+                  <p class="user-name">{{ initialSpecTweet.user.name }}</p>
                   <p class="user-handle">
-                    @applepen<span>・</span
-                    ><span class="time-stamp">3 小時</span>
+                    @{{ initialSpecTweet.user.account }}<span>・</span
+                    ><span class="time-stamp">{{
+                      initialSpecTweet.createdAt | fromNow
+                    }}</span>
                   </p>
                 </div>
               </div>
               <div class="card-body">
                 <p class="tweet-content">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Pellentesque interdum rutrum sodales. Nullam mattis fermentum
-                  libero, non volutpat.
+                  {{ initialSpecTweet.description }}
                 </p>
               </div>
               <div class="card-footer">
                 <div class="link-line"></div>
-                <p class="user-handle">回覆給 <span class="user-name-highlight">@apple</span></p>
+                <p class="user-handle">
+                  回覆給
+                  <span class="user-name-highlight"
+                    >@{{ initialSpecTweet.user.account }}</span
+                  >
+                </p>
               </div>
             </div>
           </div>
           <!-- reply card -->
           <div class="card-reply">
             <img
-              src="./../assets/pictures/dummyUser2.png"
+              :src="currentUser.avatar | emptyImage"
               alt="reply-user-image"
               class="user-image-sm reply-user-image"
             />
@@ -61,7 +69,9 @@
           <button
             class="tweet-btn btn-bg btn-border"
             :class="{ disabled: isProcessing }"
-            @click.prevent.stop="handleReplySubmit(replyContent)"
+            @click.prevent.stop="
+              handleReplySubmit(initialSpecTweet.id, replyContent)
+            "
           >
             回覆
           </button>
@@ -72,11 +82,22 @@
 </template>
 
 <script>
+import { emptyImageFilter } from "../utils/mixins";
+import { fromNowFilter } from "../utils/mixins";
+import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
+import repliesAPI from "../apis/reply";
+
 export default {
   name: "ReplyModal",
+  mixins: [emptyImageFilter, fromNowFilter],
   props: {
-    // 從 Main.vue 或 Reply.vue 傳來
+    // 從 Home.vue 或 Tweet.vue 傳來
     show: Boolean,
+    // 來自 Tweet.vue or Home.vue
+    initialSpecTweet: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -86,20 +107,64 @@ export default {
     };
   },
   methods: {
-    handleReplySubmit(content) {
-      if (!content || content.trim().length === 0) {
-        this.errorMessage = "內容不可空白";
-        return;
-      } else if (content.trim().length > 140) {
-        this.errorMessage = "字數不可超過 140 字";
-        return;
+    async handleReplySubmit(tweetId, content) {
+      try {
+        if (!content || content.trim().length === 0) {
+          this.errorMessage = "內容不可空白";
+          return;
+        } else if (content.trim().length > 140) {
+          this.errorMessage = "字數不可超過 140 字";
+          return;
+        }
+
+        // disable reply button to prevent duplicate requests
+        this.isProcessing = true;
+
+        // POST api/tweets/:tweet_id/replies
+        const { data } = await repliesAPI.postReply(tweetId, content);
+
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+
+        // emit to tweet.vue
+        this.$emit("after-reply-submit", tweetId);
+        // notify user
+        Toast.fire({
+          icon: "success",
+          title: "成功送出回覆",
+        });
+
+        // re-enable tweet button
+        this.isProcessing = false;
+        // clear reply content
+        this.replyContent = "";
+        // close the modal after submitted
+        this.$emit("close");
+      } catch (error) {
+        console.error(error.response.data);
+        // re-enable reply button
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "error",
+          title: error.message,
+        });
       }
-      console.log(content);
-      // TODO：發送 POST api/tweets/:tweet_id/replies
-      // TODO：傳送過程 isProcessing = true 以暫時 disable 按鈕，防止重複發回覆
     },
     clearErrorMessage() {
       this.errorMessage = "";
+    },
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+    tweet: {
+      get() {
+        return this.initialSpecTweet;
+      },
+      set(value) {
+        // update props: initialSpecTweet or initialTweet
+        this.$emit("update-tweet", value);
+      },
     },
   },
 };
@@ -163,11 +228,7 @@ export default {
 }
 
 .tweet-user-image {
-  padding: 1rem;
   margin-right: 0.5rem;
-  background-image: url("./../assets/pictures/dummyUser.png");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .card-info {

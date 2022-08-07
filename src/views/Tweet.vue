@@ -31,9 +31,10 @@
     </div>
     <TweetModal :show="showTweetModal" @close="toggleTweetModal(false)" />
     <ReplyModal
-      :initial-spec-tweet="specTweet"
+      :initial-spec-tweet.sync="specTweet"
       :show="showReplyModal"
       @close="toggleReplyModal(false)"
+      @after-reply-submit="afterReplySubmit"
     />
   </div>
 </template>
@@ -86,6 +87,7 @@ export default {
     this.fetchReplies(id);
   },
   beforeRouteUpdate(to, from, next) {
+    // 直接輸入 url 也可取得推文內容
     const { id } = to.params;
     this.fetchSpecTweet(id);
     this.fetchReplies(id);
@@ -147,6 +149,11 @@ export default {
           title: "無法取得回覆，請再試一次",
         });
       }
+    },
+    afterReplySubmit() {
+      this.fetchReplies(this.specTweet.id);
+      // 收到 ReplyModal.vue 通知後，將回覆數++
+      this.specTweet.replyCounts++;
     },
   },
 };

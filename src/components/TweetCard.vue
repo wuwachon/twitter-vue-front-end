@@ -69,8 +69,8 @@ export default {
   },
   methods: {
     showReplyModal(bool) {
-      // 通知 Home.vue or Tweet.vue 要開啟 reply modal
-      this.$emit("show-reply-modal", bool);
+      // 通知 Home.vue 要開啟 reply modal
+      this.$emit("show-reply-modal", bool, this.tweet);
     },
     async toggleLike(isTweetLiked, tweetId) {
       try {
@@ -106,7 +106,6 @@ export default {
 
         // 通知 parent view likecount 有改變
         this.$emit("after-like-clicked");
-
       } catch (error) {
         console.error(error.response.data.message);
         Toast.fire({
@@ -114,6 +113,12 @@ export default {
           title: error.response.data.message,
         });
       }
+    },
+  },
+  watch: {
+    // 偵測該則 tweet 狀態變化
+    initialTweet(newValue) {
+      this.tweet = newValue;
     },
   },
 };
